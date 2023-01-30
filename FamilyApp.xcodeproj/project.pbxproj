@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6435E5B029883A8C001A355B /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6435E5AF29883A8C001A355B /* Map.swift */; };
+		6435E5B329886966001A355B /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6435E5B229886966001A355B /* MapViewModel.swift */; };
 		64A0FCE42987D33E004B18AA /* FamilyAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A0FCE32987D33E004B18AA /* FamilyAppApp.swift */; };
 		64A0FCE62987D33E004B18AA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A0FCE52987D33E004B18AA /* ContentView.swift */; };
 		64A0FCE82987D344004B18AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64A0FCE72987D344004B18AA /* Assets.xcassets */; };
@@ -38,6 +39,8 @@
 
 /* Begin PBXFileReference section */
 		6435E5AF29883A8C001A355B /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
+		6435E5B129885A71001A355B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		6435E5B229886966001A355B /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		64A0FCE02987D33E004B18AA /* FamilyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FamilyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64A0FCE32987D33E004B18AA /* FamilyAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyAppApp.swift; sourceTree = "<group>"; };
 		64A0FCE52987D33E004B18AA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -100,6 +103,7 @@
 		64A0FCE22987D33E004B18AA /* FamilyApp */ = {
 			isa = PBXGroup;
 			children = (
+				6435E5B129885A71001A355B /* Info.plist */,
 				64A0FCE32987D33E004B18AA /* FamilyAppApp.swift */,
 				64A0FCE52987D33E004B18AA /* ContentView.swift */,
 				64A0FCE72987D344004B18AA /* Assets.xcassets */,
@@ -107,6 +111,7 @@
 				64A0FCEE2987D344004B18AA /* FamilyApp.xcdatamodeld */,
 				64A0FCE92987D344004B18AA /* Preview Content */,
 				6435E5AF29883A8C001A355B /* Map.swift */,
+				6435E5B229886966001A355B /* MapViewModel.swift */,
 			);
 			path = FamilyApp;
 			sourceTree = "<group>";
@@ -271,6 +276,7 @@
 				64A0FCF02987D344004B18AA /* FamilyApp.xcdatamodeld in Sources */,
 				64A0FCE62987D33E004B18AA /* ContentView.swift in Sources */,
 				64A0FCE42987D33E004B18AA /* FamilyAppApp.swift in Sources */,
+				6435E5B329886966001A355B /* MapViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +438,8 @@
 				DEVELOPMENT_TEAM = 44A27399WU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FamilyApp/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs your location to show it on the map.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -461,6 +469,8 @@
 				DEVELOPMENT_TEAM = 44A27399WU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FamilyApp/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs your location to show it on the map.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
