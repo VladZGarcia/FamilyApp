@@ -13,7 +13,7 @@ struct FamilyAppApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MapContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

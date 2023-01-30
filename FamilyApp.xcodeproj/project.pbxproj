@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6435E5B029883A8C001A355B /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6435E5AF29883A8C001A355B /* Map.swift */; };
 		64A0FCE42987D33E004B18AA /* FamilyAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A0FCE32987D33E004B18AA /* FamilyAppApp.swift */; };
 		64A0FCE62987D33E004B18AA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A0FCE52987D33E004B18AA /* ContentView.swift */; };
 		64A0FCE82987D344004B18AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64A0FCE72987D344004B18AA /* Assets.xcassets */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6435E5AF29883A8C001A355B /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		64A0FCE02987D33E004B18AA /* FamilyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FamilyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64A0FCE32987D33E004B18AA /* FamilyAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyAppApp.swift; sourceTree = "<group>"; };
 		64A0FCE52987D33E004B18AA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				64A0FCEC2987D344004B18AA /* Persistence.swift */,
 				64A0FCEE2987D344004B18AA /* FamilyApp.xcdatamodeld */,
 				64A0FCE92987D344004B18AA /* Preview Content */,
+				6435E5AF29883A8C001A355B /* Map.swift */,
 			);
 			path = FamilyApp;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6435E5B029883A8C001A355B /* Map.swift in Sources */,
 				64A0FCED2987D344004B18AA /* Persistence.swift in Sources */,
 				64A0FCF02987D344004B18AA /* FamilyApp.xcdatamodeld in Sources */,
 				64A0FCE62987D33E004B18AA /* ContentView.swift in Sources */,
