@@ -12,19 +12,24 @@ enum MapDetails {
     static  let defaultSpan = MKCoordinateSpan(latitudeDelta: 0.01,
                                                longitudeDelta: 0.01)
 }
-final class MapContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
+ class MapContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     @Published var region = MKCoordinateRegion(center:MapDetails.startingLocation,
                                                span: MapDetails.defaultSpan )
-    var locationManager: CLLocationManager?
+     var locationManager: CLLocationManager?
     
+     override init() {
+         super.init()
+         locationManager?.delegate = self
+     }
     func checkIfLocationSercicesIsEnabled() {
         if CLLocationManager.locationServicesEnabled() {
             
             locationManager = CLLocationManager()
-            locationManager!.delegate = self
+            
             //locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         } else {
+            locationManager?.requestWhenInUseAuthorization()
             print("Show an alert lettin them know its off, go turn it on")
         }
     }

@@ -49,6 +49,7 @@ struct MapContentView: View {
             .accentColor(Color(.systemPink))
             .onAppear {
                 viewModel.checkIfLocationSercicesIsEnabled()
+            
             }
     }
 }
