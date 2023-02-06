@@ -7,11 +7,13 @@
 
 import SwiftUI
 import MapKit
+import Firebase
 
 struct MapContentView: View {
     @StateObject private var viewModel = MapContentViewModel()
-    
+    let db = Firestore.firestore()
     @State var places = [Place(name: "Nice place", latitude: 37.3323341, longitude: -122.032)]
+    var locationManager = CLLocationManager()
     
     var body: some View {
         Map(coordinateRegion: $viewModel.region,
@@ -48,10 +50,22 @@ struct MapContentView: View {
             .ignoresSafeArea()
             .accentColor(Color(.systemPink))
             .onAppear {
-                viewModel.checkIfLocationSercicesIsEnabled()
-            
+                viewModel.startLocationUpdates()
+               
             }
+        
     }
+    
 }
+    //func saveToFirestore(userName: String, userLatitude: Double, userLongitude: Double) {
+    //    let place = Place(name: userName, latitude: userLatitude, longitude: userLongitude)
+    //
+    //    do {
+    //        _ = try db.collection("location").addDocument(from: place)
+    //    } catch {
+    //        print("Error savin to DB")
+    //    }
+    //}
+    
 
 

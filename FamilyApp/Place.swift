@@ -7,8 +7,9 @@
 
 import Foundation
 import CoreLocation
+import FirebaseFirestoreSwift
 
-struct Place : Identifiable{
+struct Place : Codable, Identifiable{
     var id = UUID()
     var name : String
     var latitude : Double
