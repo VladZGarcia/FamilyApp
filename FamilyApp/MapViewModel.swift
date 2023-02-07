@@ -17,10 +17,11 @@ enum MapDetails {
      
      @Published var region = MKCoordinateRegion(center:MapDetails.startingLocation,
                                                 span: MapDetails.defaultSpan )
+     @Published var userLocation = [Place]()
      let db = Firestore.firestore()
      var manager = CLLocationManager()
      var location : CLLocationCoordinate2D?
-    
+     
      override init() {
          super.init()
          manager.delegate = self
@@ -28,8 +29,10 @@ enum MapDetails {
     func startLocationUpdates() {
         manager.requestWhenInUseAuthorization()
         manager.startUpdatingLocation()
-        
-        
+        if let location = manager.location{
+            saveToFirestore(userName: "user1", userLatitude: (location.coordinate.latitude), userLongitude: (location.coordinate.longitude))
+            
+        }
         //if CLLocationManager.locationServicesEnabled() {
       //
       //      locationManager = CLLocationManager()
@@ -44,14 +47,11 @@ enum MapDetails {
       //  }
     }
      func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        location = locations.first?.coordinate
-         print("Plats uppdaterad \(location)")
-         
-        
-             if let location = manager.location{
-                 saveToFirestore(userName: "user1", userLatitude: (location.coordinate.latitude), userLongitude: (location.coordinate.longitude))
-                 
-             }
+         if let location = locations.first?.coordinate {
+             updateLocationInFirestore(userLatitude: location.latitude, userLongitude: location.longitude)
+             print("Plats uppdaterad \(location)")
+             
+         }
          
      }
     
@@ -85,11 +85,46 @@ enum MapDetails {
      func saveToFirestore(userName: String, userLatitude: Double, userLongitude: Double) {
          let place = Place(name: userName, latitude: userLatitude, longitude: userLongitude)
          
-         do {
-             //_ = try db.collection("location").document().delete()
-             _ = try db.collection("location").addDocument(from: place)
-         } catch {
-             print("Error savin to DB")
+        
+             do {
+                 //_ = try db.collection("location").document().delete()
+                 _ = try db.collection("location").addDocument(from: place)
+             } catch {
+                 print("Error savin to DB")
+             }
          }
+     
+     func updateLocationInFirestore(userLatitude: Double, userLongitude: Double) {
+         db.collection("location").addSnapshotListener { [self] snapshot, err in
+             guard let snapshot = snapshot else {return}
+             if let err = err {
+                 print("error getting document \(err)")
+             } else {
+                 userLocation.removeAll()
+                 for document in snapshot.documents {
+                     let result = Result {
+                         try document.data(as: Place.self)
+                     }
+                     switch result {
+                     case.success(let place) :
+                         userLocation.append(place)
+       
+                     case .failure(let error) :
+                         print("Error decoding item: \(error)")
+                     }
+                 }
+             }
+         }
+         for user in userLocation {
+             if let id = user.id {
+                 db.collection("location").document(id).updateData(["latitude": userLatitude, "longitude": userLongitude])
+                 print("Plats uppdaterad i Firebase \(user.coordinate)")
+             }
+             
+             
+         }
+         
+         
      }
+     
 }
