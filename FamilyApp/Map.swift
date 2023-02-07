@@ -12,7 +12,10 @@ import Firebase
 struct MapContentView: View {
     @StateObject private var viewModel = MapContentViewModel()
     let db = Firestore.firestore()
-    @State var places = [Place(name: "Nice place", latitude: 37.3323341, longitude: -122.032)]
+    //@StateObject var mokUsers =
+   // [Place(name: "Member1", latitude: 37.3323341, longitude: -122.032),
+   //                         Place(name: "Member2", latitude: 37.3423371, longitude: -122.032),
+   //                         Place(name: "Member3", latitude: 37.3323341, longitude: -122.042)]
     var locationManager = CLLocationManager()
     
     var body: some View {
@@ -20,8 +23,8 @@ struct MapContentView: View {
             interactionModes: [.all],
             showsUserLocation: true,
             userTrackingMode: .constant(.follow),
-            annotationItems: places) { place in
-            MapAnnotation(coordinate: place.coordinate) {
+            annotationItems: viewModel.userLocation) { user in
+            MapAnnotation(coordinate: user.coordinate) {
                 VStack(spacing: 0){
                     ZStack {
                         Image(systemName: "mappin.circle.fill")
@@ -42,7 +45,7 @@ struct MapContentView: View {
                         .font(.caption)
                         .foregroundColor(.blue)
                         .offset(x: 0, y: -3)
-                    Text(place.name)
+                    Text(user.name)
                 }
             }
             
@@ -53,19 +56,6 @@ struct MapContentView: View {
                 viewModel.startLocationUpdates()
                
             }
-        
     }
     
 }
-    //func saveToFirestore(userName: String, userLatitude: Double, userLongitude: Double) {
-    //    let place = Place(name: userName, latitude: userLatitude, longitude: userLongitude)
-    //
-    //    do {
-    //        _ = try db.collection("location").addDocument(from: place)
-    //    } catch {
-    //        print("Error savin to DB")
-    //    }
-    //}
-    
-
-
