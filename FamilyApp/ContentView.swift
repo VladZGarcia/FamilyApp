@@ -7,6 +7,8 @@
 
 import SwiftUI
 import CoreData
+import Firebase
+import FirebaseAuth
 
 struct ContentView: View {
     @State private var username = ""
@@ -55,19 +57,39 @@ struct ContentView: View {
                     .background(Color.blue)
                     .cornerRadius(10)
                     
-                    NavigationLink(destination: Text("You are logged in @\(username)"), isActive: $showingLoginScreen) {
+                    NavigationLink(destination: Text("You are logged in @\(username)"), isActive: $showingLoginScreen)
+                    {
                         EmptyView()
+                    }
+                    Button {
+                        anonymouslyLogin()
+                    } label: {
+                        Text("Login anonymously!")
+                            .bold()
+                            .foregroundColor(.blue)
                     }
                 }
             }
-            .toolbar(.hidden)
+            .navigationBarHidden(true)
         }
     }
+    
+    func anonymouslyLogin() {
+        Auth.auth().signInAnonymously() {authResult, error in
+            if let error = error {
+                print("error signing in \(error)")
+            } else {
+                print("Signedin \(Auth.auth().currentUser?.uid)")
+            }
+        }
+        
+    }
+    
     func authenticateUser(username: String, password: String) {
         
-        if username.lowercased() == "mario2021" {
+        if username.lowercased() == "vlad2022" {
             wrongUsername = 0
-            if password.lowercased() == "abc123" {
+            if password.lowercased() == "123456" {
                 wrongPassword = 0
                 showingLoginScreen = true
             } else {
