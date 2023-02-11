@@ -31,7 +31,7 @@ enum MapDetails {
         manager.startUpdatingLocation()
         if let location = manager.location{
             saveToFirestore(userName: "user1", userLatitude: (location.coordinate.latitude), userLongitude: (location.coordinate.longitude))
-            
+       
         }
         //if CLLocationManager.locationServicesEnabled() {
       //

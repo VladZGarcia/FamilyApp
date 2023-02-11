@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		640936AB299667300016203F /* FamilyGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640936AA299667300016203F /* FamilyGroupView.swift */; };
+		640936AD29966FB00016203F /* FamilyGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640936AC29966FB00016203F /* FamilyGroupViewModel.swift */; };
+		640936AF29967BBE0016203F /* FamilyGroupCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640936AE29967BBE0016203F /* FamilyGroupCode.swift */; };
 		6435E5B029883A8C001A355B /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6435E5AF29883A8C001A355B /* Map.swift */; };
 		6435E5B329886966001A355B /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6435E5B229886966001A355B /* MapViewModel.swift */; };
+		646AE6D82996AA3C007E698E /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646AE6D72996AA3C007E698E /* Users.swift */; };
 		64832ED929887D8800284993 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64832ED829887D8700284993 /* Place.swift */; };
 		64A0FCE42987D33E004B18AA /* FamilyAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A0FCE32987D33E004B18AA /* FamilyAppApp.swift */; };
 		64A0FCE62987D33E004B18AA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A0FCE52987D33E004B18AA /* ContentView.swift */; };
@@ -44,9 +48,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		640936AA299667300016203F /* FamilyGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyGroupView.swift; sourceTree = "<group>"; };
+		640936AC29966FB00016203F /* FamilyGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyGroupViewModel.swift; sourceTree = "<group>"; };
+		640936AE29967BBE0016203F /* FamilyGroupCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyGroupCode.swift; sourceTree = "<group>"; };
 		6435E5AF29883A8C001A355B /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		6435E5B129885A71001A355B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		6435E5B229886966001A355B /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		646AE6D72996AA3C007E698E /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		64832ED829887D8700284993 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		64A0FCE02987D33E004B18AA /* FamilyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FamilyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64A0FCE32987D33E004B18AA /* FamilyAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyAppApp.swift; sourceTree = "<group>"; };
@@ -125,6 +133,10 @@
 				6435E5AF29883A8C001A355B /* Map.swift */,
 				6435E5B229886966001A355B /* MapViewModel.swift */,
 				64832ED829887D8700284993 /* Place.swift */,
+				640936AA299667300016203F /* FamilyGroupView.swift */,
+				640936AC29966FB00016203F /* FamilyGroupViewModel.swift */,
+				640936AE29967BBE0016203F /* FamilyGroupCode.swift */,
+				646AE6D72996AA3C007E698E /* Users.swift */,
 			);
 			path = FamilyApp;
 			sourceTree = "<group>";
@@ -295,10 +307,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				640936AD29966FB00016203F /* FamilyGroupViewModel.swift in Sources */,
 				6435E5B029883A8C001A355B /* Map.swift in Sources */,
+				646AE6D82996AA3C007E698E /* Users.swift in Sources */,
 				64A0FCF02987D344004B18AA /* FamilyApp.xcdatamodeld in Sources */,
+				640936AF29967BBE0016203F /* FamilyGroupCode.swift in Sources */,
 				64A0FCE62987D33E004B18AA /* ContentView.swift in Sources */,
 				64A0FCE42987D33E004B18AA /* FamilyAppApp.swift in Sources */,
+				640936AB299667300016203F /* FamilyGroupView.swift in Sources */,
 				64832ED929887D8800284993 /* Place.swift in Sources */,
 				6435E5B329886966001A355B /* MapViewModel.swift in Sources */,
 			);

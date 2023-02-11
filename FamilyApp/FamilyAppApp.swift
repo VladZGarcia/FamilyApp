@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Firebase
+import FirebaseAuth
 
 @main
 struct FamilyAppApp: App {
@@ -14,6 +15,8 @@ struct FamilyAppApp: App {
 
     init() {
         FirebaseApp.configure()
+        
+        
     }
     
     var body: some Scene {
