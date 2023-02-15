@@ -10,20 +10,16 @@ import MapKit
 import Firebase
 
 struct MapContentView: View {
-    @StateObject private var viewModel = MapContentViewModel()
+    @EnvironmentObject private var mapViewModel : MapContentViewModel
     let db = Firestore.firestore()
-    //@StateObject var mokUsers =
-   // [Place(name: "Member1", latitude: 37.3323341, longitude: -122.032),
-   //                         Place(name: "Member2", latitude: 37.3423371, longitude: -122.032),
-   //                         Place(name: "Member3", latitude: 37.3323341, longitude: -122.042)]
     var locationManager = CLLocationManager()
     
     var body: some View {
-        Map(coordinateRegion: $viewModel.region,
+        Map(coordinateRegion: $mapViewModel.region,
             interactionModes: [.all],
             showsUserLocation: true,
             userTrackingMode: .constant(.follow),
-            annotationItems: viewModel.userLocation) { user in
+            annotationItems: mapViewModel.userLocation) { user in
             MapAnnotation(coordinate: user.coordinate) {
                 VStack(spacing: 0){
                     ZStack {
@@ -53,9 +49,14 @@ struct MapContentView: View {
             .ignoresSafeArea()
             .accentColor(Color(.systemPink))
             .onAppear {
-                viewModel.startLocationUpdates()
+                mapViewModel.startLocationUpdates()
                
             }
     }
     
+}
+struct MapContentView_Previews: PreviewProvider {
+static var previews: some View {
+    MapContentView()
+}
 }

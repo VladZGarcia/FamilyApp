@@ -16,5 +16,5 @@ struct FamilyGroupCode: Codable, Identifiable {
 }
 
 class GroupCodes : ObservableObject {
-    @Published var codes = [FamilyGroupCode]()
+    @Published var groupCodes = [FamilyGroupCode]()
 }

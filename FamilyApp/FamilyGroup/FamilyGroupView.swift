@@ -12,18 +12,15 @@ import Firebase
 import FirebaseAuth
 
 struct FamilyGroupView: View {
-    @StateObject var familyGroupVM = FamilyGroupViewModel()
+    @EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
     @State private var familyGroupCode = ""
     @State private var newGroupCode = ""
     @State private var userName = ""
-    @State private var wrongUsername = 0
-    @State private var wrongPassword = 0
-    @State private var showingLoginScreen = false
+    @State private var wrongGroupCode = 0
+    
     
     var body: some View {
-        
         NavigationView {
-            
             ZStack {
                 Color.blue
                     .ignoresSafeArea()
@@ -35,26 +32,18 @@ struct FamilyGroupView: View {
                     .foregroundColor(.white)
                 
                 VStack {
-                    Text("write a name")
-                        .font(.largeTitle)
-                        .bold()
-                        .padding()
                     
-                    TextField("Username", text: $userName)
-                        .padding()
-                        .frame(width: 300, height: 50)
-                        .background(Color.black.opacity(0.05))
-                        .cornerRadius(10)
-                        .border(.red, width: CGFloat(wrongUsername))
-                    Text("Your FamilyGroup Code!")
+                    Text("FamilyGroup Code!")
+                        //.padding()
                         .font(.largeTitle)
                         .bold()
-                        .padding()
+                        
                     
-                    Text("\(familyGroupVM.RandomGroupCode())")
+                    Text("\(familyGroupCode)")
                         .font(.largeTitle)
                         .bold()
-                        .padding()
+                        .foregroundColor(.red)
+                        //.padding()
                     
                     Button("Share") {
                         // Authenticate user
@@ -65,23 +54,20 @@ struct FamilyGroupView: View {
                     .background(Color.blue)
                     .cornerRadius(10)
                     
-                    NavigationLink(destination: Text("You are logged in "), isActive: $showingLoginScreen)
-                    {
-                        EmptyView()
-                    }
                     Button {
-                        //anonymouslyLogin()
+                        //share sheet
                     } label: {
                         Text("Share to your familymembers")
                             .bold()
                             .foregroundColor(.blue)
+                            .padding()
                     }
                     SecureField("FamilyGroupCode", text: $newGroupCode)
-                        .padding()
+                        //.padding()
                         .frame(width: 300, height: 50)
                         .background(Color.black.opacity(0.05))
                         .cornerRadius(10)
-                        .border(.red, width: CGFloat(wrongPassword))
+                        .border(.red, width: CGFloat(wrongGroupCode))
                     Button("Connect") {
                         // Authenticate user
                         //authenticateUser(username: username, password: password)
@@ -90,24 +76,11 @@ struct FamilyGroupView: View {
                     .frame(width: 300, height: 50)
                     .background(Color.blue)
                     .cornerRadius(10)
-                    
-                    NavigationLink(destination: Text("You are logged in"), isActive: $showingLoginScreen)
-                    {
-                        EmptyView()
-                    }
-                    //Button {
-                    //    //anonymouslyLogin()
-                    //} label: {
-                    //    Text("Connect to a FamilyGroup")
-                    //        .bold()
-                    //        .foregroundColor(.blue)
-                    //}
                 }
             }
             .navigationBarHidden(true)
         }
     }
-    
 }
 
 struct FamilyGroupView_Previews: PreviewProvider {
