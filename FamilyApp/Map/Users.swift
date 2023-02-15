@@ -1,17 +1,18 @@
 //
-//  Place.swift
+//  Users.swift
 //  FamilyApp
 //
-//  Created by Hugo Garcia on 2023-01-30.
+//  Created by Hugo Garcia on 2023-02-10.
 //
 
 import Foundation
 import CoreLocation
 import FirebaseFirestoreSwift
+import SwiftUI
 
-struct Place : Codable, Identifiable{
+struct Users : Codable, Identifiable{
     @DocumentID var id : String?
-    var name : String
+    var name : String = ""
     var latitude : Double
     var longitude : Double
     

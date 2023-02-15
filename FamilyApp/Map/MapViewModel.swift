@@ -6,6 +6,7 @@
 //
 import MapKit
 import Firebase
+import SwiftUI
 
 enum MapDetails {
     static let startingLocation = CLLocationCoordinate2D(latitude: 59.314278,
@@ -15,9 +16,13 @@ enum MapDetails {
 }
  class MapContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
      
+     @EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
+     @EnvironmentObject private var viewModel : AppViewModel
+     
      @Published var region = MKCoordinateRegion(center:MapDetails.startingLocation,
                                                 span: MapDetails.defaultSpan )
-     @Published var userLocation = [Place]()
+     @Published var userLocation = [Users(latitude: 37.3323341, longitude: -122.029)]
+     
      let db = Firestore.firestore()
      var manager = CLLocationManager()
      var location : CLLocationCoordinate2D?
@@ -26,13 +31,46 @@ enum MapDetails {
          super.init()
          manager.delegate = self
      }
+     
+     func listenToFirestore() {
+        // db.collection("FamilyGroup")
+        //     .document(familyGroupVM.groupCode)
+        //     .collection("users")
+        //     .addSnapshotListener { [self] snapshot, err in
+        //         //guard let snapshot = snapshot else {return}
+        //         guard let snapshot = snapshot  else{
+        //             print("Data was empty.  \(err)")
+        //             return
+        //         }
+        //         if let err = err {
+        //             print("error getting document \(err)")
+        //         } else {
+        //             userLocation.removeAll()
+        //             for document in snapshot.documents {
+        //                 let result = Result{
+        //                     try document.data(as: Users.self)
+        //
+        //                 }
+        //                 switch result {
+        //                     case .succes(let user) :
+        //                     userLocation.append(user)
+        //                 case .failure(let error) :
+        //                     print("Error decoding item: \(error)")
+        //
+        //                 }
+        //
+        //             }
+        //         }
+        //     }
+     }
+     
     func startLocationUpdates() {
         manager.requestWhenInUseAuthorization()
         manager.startUpdatingLocation()
-        if let location = manager.location{
-            saveToFirestore(userName: "user1", userLatitude: (location.coordinate.latitude), userLongitude: (location.coordinate.longitude))
-       
-        }
+        //if let location = manager.location{
+        //    saveToFirestore(userName: "user1", userLatitude: (location.coordinate.latitude), userLongitude: //(location.coordinate.longitude))
+       //
+        //}
         //if CLLocationManager.locationServicesEnabled() {
       //
       //      locationManager = CLLocationManager()
@@ -48,7 +86,7 @@ enum MapDetails {
     }
      func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
          if let location = locations.first?.coordinate {
-             updateLocationInFirestore(userLatitude: location.latitude, userLongitude: location.longitude)
+            // updateLocationInFirestore(userLatitude: location.latitude, userLongitude: location.longitude)
              print("Plats uppdaterad \(location)")
              
          }
@@ -82,20 +120,42 @@ enum MapDetails {
    //     checkLocationAuthorization()
    // }
      
-     func saveToFirestore(userName: String, userLatitude: Double, userLongitude: Double) {
-         let place = Place(name: userName, latitude: userLatitude, longitude: userLongitude)
+     //func saveToFirestore(userName: String, userLatitude: Double, userLongitude: Double) {
+     //    let place = Place(name: userName, latitude: userLatitude, longitude: userLongitude)
+     //
+     //
+     //        do {
+     //            //_ = try db.collection("location").document().delete()
+     //            _ = try db.collection("location").addDocument(from: place)
+     //        } catch {
+     //            print("Error savin to DB")
+     //        }
+     //    }
+     
+     func saveToFirestore(userGroupCode: String, userName: String) {
+         let groupCode = userGroupCode
          
-        
+         
+         if let location = manager.location{
+             let user = Users(name: userName, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+             //guard let authUser = Auth.auth().currentUser else {return}
              do {
-                 //_ = try db.collection("location").document().delete()
-                 _ = try db.collection("location").addDocument(from: place)
+                 _ = try db.collection("FamilyGroup")
+                     .document(groupCode)
+                     .collection("users").addDocument(from: user)
+                 
              } catch {
-                 print("Error savin to DB")
+                 print("Error saving to DB")
              }
+         
          }
+     }
      
      func updateLocationInFirestore(userLatitude: Double, userLongitude: Double) {
-         db.collection("location").addSnapshotListener { [self] snapshot, err in
+         guard let authUser = Auth.auth().currentUser else {return}
+         
+         db.collection("FamilyGroup").document(familyGroupVM.groupCode).collection("users")
+             .addSnapshotListener { [self] snapshot, err in
              guard let snapshot = snapshot else {return}
              if let err = err {
                  print("error getting document \(err)")
@@ -103,11 +163,11 @@ enum MapDetails {
                  userLocation.removeAll()
                  for document in snapshot.documents {
                      let result = Result {
-                         try document.data(as: Place.self)
+                         try document.data(as: Users.self)
                      }
                      switch result {
-                     case.success(let place) :
-                         userLocation.append(place)
+                     case.success(let user) :
+                         userLocation.append(user)
        
                      case .failure(let error) :
                          print("Error decoding item: \(error)")
@@ -116,8 +176,9 @@ enum MapDetails {
              }
          }
          for user in userLocation {
+             
              if let id = user.id {
-                 db.collection("location").document(id).updateData(["latitude": userLatitude, "longitude": userLongitude])
+                 db.collection("FamilyGroup").document(familyGroupVM.groupCode).collection("users").document(id).updateData(["latitude": userLatitude, "longitude": userLongitude])
                  print("Plats uppdaterad i Firebase \(user.coordinate)")
              }
              
