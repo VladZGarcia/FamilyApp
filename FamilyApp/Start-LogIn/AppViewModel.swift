@@ -12,13 +12,20 @@ import Firebase
 import FirebaseAuth
 
 class AppViewModel: NSObject, ObservableObject {
+    
+    @EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
+    
+    
+    @Published var haveUserData = false
     @Published var wrongUsername = 0
     @Published var wrongPassword = 0
     @Published var signedIn = false
-    @Published var haveUserName = false
-    
+    @Published var haveGroupCode = false
+    @Published var groupCode = ""
+    @Published var userName = ""
     
     let auth = Auth.auth()
+    let db = Firestore.firestore()
     
     var isSignedIn: Bool {
         return auth.currentUser != nil
@@ -29,45 +36,115 @@ class AppViewModel: NSObject, ObservableObject {
    //         if let error = error {
    //             print("error signing in \(error)")
    //         } else {
-   //
    //                 self?.signedIn = true
-   //
-   //
-   //
    //         }
    //     }
-   //
    // }
     
     func logIn(email: String, password: String) {
-        auth.signIn(withEmail: email, password: password) {[weak self]result, error in
+        print("login -> Signedin: \(self.signedIn)")
+        auth.signIn(withEmail: email, password: password) {[self]result, error in
             guard result != nil, error == nil else {
-                self?.wrongUsername = 2
-                self?.wrongPassword = 2
+                self.wrongUsername = 2
+                self.wrongPassword = 2
                 return
             }
-                self?.signedIn = true
-            print("login -> Signedin: \(self?.signedIn)")
+            
+            self.signedIn = true
+            
+        print("login -> Signedin: \(self.signedIn)")
         }
     }
+    
+    func getFamilyGroup() {
+        print("getFamilyGroup -> Have groupcode: \(haveGroupCode)")
+        //var dbGroupCode = ""
+        if auth.currentUser != nil {
+            if let user = auth.currentUser {
+                print("auth currentuser: \(user.uid)")
+
+                db.collection("UserGroupCodes").document(user.uid).collection("groupcodes").addSnapshotListener { [self] (snapshot, error) in
+                    guard let snapshot = snapshot else {return}
+                    
+                    if let err = error {
+                        print("Error getting document \(err)")
+                    } else {
+                        
+                        for document in snapshot.documents {
+                            let result = Result{
+                                try document.data(as: FamilyGroupCode.self)
+                            }
+                            switch result {
+                            case .success(let gCode) :
+                                groupCode = gCode.groupCode
+                                print("groupcode: \(groupCode)")
+                                
+                                haveGroupCode = true
+                                print("login -> Have groupcode: \(haveGroupCode)")
+                            case .failure(let error) :
+                                print("Error decoding item: \(error)")
+                            }
+                        }
+                    }
+                    
+                }
+    
+            }
+        }
+        
+    }
+    
+    func getUserdata() {
+        print("getUserData -> Have userdata: \(self.haveUserData)")
+        print("getUserData groupcode: \(groupCode)")
+        if auth.currentUser != nil {
+            if let user = auth.currentUser {
+                print("auth currentuser: \(user.uid)")
+                db.collection("Users").document(user.uid).collection("userinfo").addSnapshotListener { [self] (snapshot, error) in
+                    guard let snapshot = snapshot else {return}
+                    
+                    if let err = error {
+                        print("Error gtting document \(err)")
+                        
+                    } else {
+                        for document in snapshot.documents {
+                            
+                            let result = Result{
+                                try document.data(as: Users.self)
+                            }
+                            switch result {
+                            case .success(let gUser) :
+                                userName = gUser.name
+                                groupCode = gUser.groupCode
+                                haveUserData = true
+                                print("username: \(userName) groupcode: \(groupCode)")
+                                print("login -> Have username: \(self.haveUserData)")
+                            case .failure(let error) :
+                                print("Error decoding item: \(error)")
+                                
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
+        
+    
+    
     func signUp(email: String, password: String) {
-        auth.createUser(withEmail: email, password: password) { [weak self] result, error in
+        auth.createUser(withEmail: email, password: password) { result, error in
             guard result != nil, error == nil else {
                 return
             }
-            
-                self?.signedIn = true
-            
+               
         }
-        
     }
     
     func signout() {
         try? auth.signOut()
         
         self.signedIn = false
-        
     }
-    
-    
 }

@@ -48,12 +48,14 @@ struct UserNameView: View {
                         .cornerRadius(10)
                         .padding()
                     Button("Start") {
-                        viewModel.haveUserName = true
+                        
                         familyGroupVM.groupCode = familyGroupVM.randomGroupCode()
                         familyGroupVM.userName = userName
                         mapViewModel.saveToFirestore(userGroupCode: familyGroupVM.groupCode, userName: familyGroupVM.userName)
-                        
+                        viewModel.haveUserData = true
+                        viewModel.haveGroupCode = true
                         self.startApp = true
+                        print("user: \(viewModel.haveUserData) code: \(viewModel.haveGroupCode)")
                     }
                     .foregroundColor(.white)
                     .frame(width: 300, height: 50)
@@ -79,7 +81,7 @@ struct UserNameView: View {
                 }
             }
         }
-        NavigationLink("", destination: ContentView(), isActive: $startApp)
+        NavigationLink("", destination: ShoppingListView(), isActive: $startApp)
        
     }
     

@@ -18,12 +18,12 @@ struct ShoppingListView: View {
     let db = Firestore.firestore()
     @State var newItem : String = ""
     @ObservedObject var storeItems = StoreItems()
-    init() {
-        storeItems.items.append(ItemList(itemName: "mjölk"))
-        storeItems.items.append(ItemList(itemName: "morot"))
-        storeItems.items.append(ItemList(itemName: "sirap"))
-        
-    }
+   // init() {
+   //     storeItems.items.append(ItemList(itemName: "mjölk"))
+   //     storeItems.items.append(ItemList(itemName: "morot"))
+   //     storeItems.items.append(ItemList(itemName: "sirap"))
+   //
+   // }
     
     var searchBar : some View {
         HStack {
@@ -49,7 +49,7 @@ struct ShoppingListView: View {
                                 if let id = item.id
                                    //let user = Auth.auth().currentUser
                                 {
-                                    db.collection("FamilyGroup").document(familyGroupVM.groupCode).collection("items").document(id).delete()
+                                    db.collection("FamilyGroup").document(viewModel.groupCode).collection("items").document(id).delete()
                                 }
                             }
                         }
@@ -71,7 +71,7 @@ struct ShoppingListView: View {
         func listenToFirestore() {
             //guard let user = Auth.auth().currentUser else {return}
             
-            db.collection("FamilyGroup").document(familyGroupVM.groupCode).collection("items").addSnapshotListener { snapshot, err in
+            db.collection("FamilyGroup").document(viewModel.groupCode).collection("items").addSnapshotListener { snapshot, err in
                 guard let snapshot = snapshot else {return}
                 
                 if let err = err {
@@ -99,7 +99,7 @@ struct ShoppingListView: View {
         //guard let user = Auth.auth().currentUser else {return}
         
         do {
-            _ = try db.collection("FamilyGroup").document(familyGroupVM.groupCode).collection("items").addDocument(from: item)
+            _ = try db.collection("FamilyGroup").document(viewModel.groupCode).collection("items").addDocument(from: item)
         } catch {
             print("Error savin to DB")
         }
