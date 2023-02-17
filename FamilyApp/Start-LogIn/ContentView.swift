@@ -13,25 +13,33 @@ import FirebaseAuth
 
 struct ContentView: View {
     @EnvironmentObject private var viewModel : AppViewModel
+    @EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
     
     
     var body: some View {
         
         NavigationStack {
             if viewModel.signedIn {
-                if !viewModel.haveUserName {
-                    UserNameView()
-                } else {
+               
+                if viewModel.haveUserData{
                     ShoppingListView()
                 }
-            } else {
+            } else  {
                 LogInView()
             }
         }
+        .ignoresSafeArea()
+        .navigationBarHidden(true)
         .onAppear {
-            viewModel.signedIn = viewModel.isSignedIn
-            print("haveUserName: \(viewModel.haveUserName) signedIn: \(viewModel.signedIn)")
+            //if viewModel.isSignedIn {
+            //     viewModel.getFamilyGroup()
+            //    if viewModel.haveGroupCode {
+            //        viewModel.getUserName()
+            //    }
+            //}
+            print("haveUserName: \($viewModel.haveUserData) signedIn: \(viewModel.signedIn)")
         }
+        
     }
 }
 

@@ -11,6 +11,9 @@ import Firebase
 import FirebaseAuth
 
 struct ItemRowView: View {
+    @EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
+    @EnvironmentObject private var viewModel : AppViewModel
+    
     let db = Firestore.firestore()
     let item : ItemList
     
@@ -19,10 +22,10 @@ struct ItemRowView: View {
             Text(item.itemName)
             Spacer()
             Button(action: {
-                if let id = item.id,
-                   let user = Auth.auth().currentUser
+                if let id = item.id
+                   //let user = Auth.auth().currentUser
                 {
-                    db.collection("users").document(user.uid)
+                    db.collection("FamilyGroup").document(viewModel.groupCode)
                         .collection("items").document(id).updateData(["isChecked": !item.isChecked])
                 }
             }) {

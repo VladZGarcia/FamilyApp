@@ -62,6 +62,8 @@ struct SignUpView: View {
                         .background(Color.black.opacity(0.05))
                         .cornerRadius(10)
                         .border(.red, width: CGFloat(wrongPassword))
+                   
+                    
                     Button("Create Account") {
                         guard !email.isEmpty, !password.isEmpty else {
                             viewModel.wrongUsername = 2
@@ -69,9 +71,7 @@ struct SignUpView: View {
                             return
                         }
                         viewModel.signUp(email: email, password: password)
-                        
-                            startApp = true
-                        
+                        startApp = true
                     }
                     .foregroundColor(.white)
                     .frame(width: 300, height: 50)
@@ -81,7 +81,8 @@ struct SignUpView: View {
                 }
                 
             }
-            
+            .ignoresSafeArea()
+            //.navigationBarHidden(true)
             NavigationLink("", destination: UserNameView(), isActive: $startApp)
             
         } 

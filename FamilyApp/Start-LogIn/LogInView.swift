@@ -13,6 +13,8 @@ import FirebaseAuth
 
 struct LogInView: View {
     @EnvironmentObject private var viewModel : AppViewModel
+    @EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
+    
     @State private var email = ""
     @State private var password = ""
     @State private var startApp = false
@@ -65,10 +67,10 @@ struct LogInView: View {
                             return
                         }
                         viewModel.logIn(email: email, password: password)
-                        print("change startApp: \(startApp)")
-                        if viewModel.signedIn {
-                            startApp = true
-                        }
+                        startApp = true
+                        
+                            
+                        
                         
                     }
                     .padding()
@@ -86,11 +88,14 @@ struct LogInView: View {
                 }
             }
         }
+        .ignoresSafeArea()
+        //.navigationBarHidden(true)
         .onAppear {
-            viewModel.signout()
+            //viewModel.signout()
+            
         }
-        .navigationBarHidden(true)
-        NavigationLink("", destination: ContentView(), isActive: $startApp)
+        
+        NavigationLink("", destination: GetDataView(), isActive: $viewModel.signedIn)
         
     }
 }
