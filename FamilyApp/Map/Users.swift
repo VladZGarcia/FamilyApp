@@ -13,6 +13,7 @@ import SwiftUI
 struct Users : Codable, Identifiable{
     @DocumentID var id : String?
     var name : String = ""
+    var email: String = ""
     var groupCode : String = ""
     var latitude : Double
     var longitude : Double

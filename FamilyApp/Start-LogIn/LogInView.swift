@@ -95,8 +95,8 @@ struct LogInView: View {
             
         }
         
-        NavigationLink("", destination: GetDataView(), isActive: $viewModel.signedIn)
-        
+        NavigationLink("", destination: ContentView(), isActive: $viewModel.signedIn)
+          
     }
 }
 
