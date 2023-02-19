@@ -14,12 +14,14 @@ import FirebaseAuth
 struct ContentView: View {
     @EnvironmentObject private var viewModel : AppViewModel
     @EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
+    @EnvironmentObject private var mapViewModel : MapContentViewModel
     
     
     var body: some View {
         
         NavigationStack {
             if viewModel.signedIn {
+                GetDataView()
                
                 if viewModel.haveUserData{
                     ShoppingListView()
@@ -31,13 +33,7 @@ struct ContentView: View {
         .ignoresSafeArea()
         .navigationBarHidden(true)
         .onAppear {
-            //if viewModel.isSignedIn {
-            //     viewModel.getFamilyGroup()
-            //    if viewModel.haveGroupCode {
-            //        viewModel.getUserName()
-            //    }
-            //}
-            print("haveUserName: \($viewModel.haveUserData) signedIn: \(viewModel.signedIn)")
+            print("haveUserData: \($viewModel.haveUserData) signedIn: \(viewModel.signedIn)")
         }
         
     }

@@ -14,6 +14,7 @@ import FirebaseAuth
 class AppViewModel: NSObject, ObservableObject {
     
     @EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
+    @EnvironmentObject private var mapViewModel : MapContentViewModel
     
     
     @Published var haveUserData = false
@@ -116,9 +117,10 @@ class AppViewModel: NSObject, ObservableObject {
                             case .success(let gUser) :
                                 userName = gUser.name
                                 groupCode = gUser.groupCode
+                                
                                 haveUserData = true
                                 print("username: \(userName) groupcode: \(groupCode)")
-                                print("login -> Have username: \(self.haveUserData)")
+                                print("login -> Have userData: \(self.haveUserData)")
                             case .failure(let error) :
                                 print("Error decoding item: \(error)")
                                 
@@ -136,6 +138,7 @@ class AppViewModel: NSObject, ObservableObject {
     func signUp(email: String, password: String) {
         auth.createUser(withEmail: email, password: password) { result, error in
             guard result != nil, error == nil else {
+                self.signedIn = true
                 return
             }
                

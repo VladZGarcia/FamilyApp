@@ -54,7 +54,6 @@ struct ShoppingListView: View {
                             }
                         }
                 }.onAppear() {
-                    
                     listenToFirestore()
                 }
                 .navigationBarTitle("ShoppingList")

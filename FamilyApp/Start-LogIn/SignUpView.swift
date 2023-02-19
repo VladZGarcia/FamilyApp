@@ -13,6 +13,8 @@ import FirebaseAuth
 
 struct SignUpView: View {
     @EnvironmentObject private var viewModel : AppViewModel
+    @EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
+    
     @State private var email = ""
     @State private var password = ""
     @State private var wrongUsername = 0
@@ -70,6 +72,7 @@ struct SignUpView: View {
                             viewModel.wrongPassword = 2
                             return
                         }
+                        //familyGroupVM.randomGroupCode()
                         viewModel.signUp(email: email, password: password)
                         startApp = true
                     }

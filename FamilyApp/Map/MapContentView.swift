@@ -11,6 +11,9 @@ import Firebase
 
 struct MapContentView: View {
     @EnvironmentObject private var mapViewModel : MapContentViewModel
+    @EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
+    @EnvironmentObject private var viewModel : AppViewModel
+    
     let db = Firestore.firestore()
     var locationManager = CLLocationManager()
     

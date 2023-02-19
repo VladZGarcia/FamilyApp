@@ -14,6 +14,7 @@ import FirebaseAuth
 struct GetDataView: View {
     @EnvironmentObject private var viewModel : AppViewModel
     @EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
+    @EnvironmentObject private var mapViewModel : MapContentViewModel
     
     var body: some View {
         NavigationStack {
@@ -21,8 +22,6 @@ struct GetDataView: View {
         }
             .onAppear() {
                 viewModel.getUserdata()
-                familyGroupVM.groupCode = viewModel.groupCode
-                familyGroupVM.userName = viewModel.userName
             }
         NavigationLink("", destination: ContentView(), isActive: $viewModel.haveUserData)
     }
