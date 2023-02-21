@@ -20,7 +20,7 @@ struct LogInView: View {
     @State private var startApp = false
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ZStack {
                 Color.blue
                     .ignoresSafeArea()
@@ -40,9 +40,9 @@ struct LogInView: View {
                     
                     TextField("Email Address", text: $email)
                         .keyboardType(.emailAddress)
-                        .submitLabel(.continue)
+                        //.submitLabel(.continue)
                         .autocorrectionDisabled(true)
-                        .textInputAutocapitalization(.never)
+                        //.textInputAutocapitalization(.never)
                         .padding()
                         .frame(width: 300, height: 50)
                         .background(Color.black.opacity(0.05))
@@ -51,9 +51,9 @@ struct LogInView: View {
                     
                     SecureField("Password", text: $password)
                         .keyboardType(.alphabet)
-                        .submitLabel(.done)
+                        //.submitLabel(.done)
                         .autocorrectionDisabled(true)
-                        .textInputAutocapitalization(.none)
+                        //.textInputAutocapitalization(.none)
                         .padding()
                         .frame(width: 300, height: 50)
                         .background(Color.black.opacity(0.05))
@@ -68,10 +68,6 @@ struct LogInView: View {
                         }
                         viewModel.logIn(email: email, password: password)
                         startApp = true
-                        
-                            
-                        
-                        
                     }
                     .padding()
                     .foregroundColor(.white)
@@ -88,15 +84,12 @@ struct LogInView: View {
                 }
             }
         }
-        .ignoresSafeArea()
+        
+        //.ignoresSafeArea()
         //.navigationBarHidden(true)
-        .onAppear {
-            //viewModel.signout()
-            
-        }
         
         NavigationLink("", destination: ContentView(), isActive: $viewModel.signedIn)
-          
+            .environmentObject(viewModel)
     }
 }
 

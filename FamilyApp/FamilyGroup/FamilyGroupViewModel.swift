@@ -11,38 +11,39 @@ import MapKit
 import FirebaseAuth
 
 class FamilyGroupViewModel: NSObject, ObservableObject {
-    @EnvironmentObject private var mapViewModel : MapContentViewModel
-    @EnvironmentObject private var viewModel : AppViewModel
+    
+    //@EnvironmentObject var viewModel : AppViewModel
     
     let db = Firestore.firestore()
     let auth = Auth.auth()
     //@Published var groupCode = ""
     //@Published var userName = ""
     
-    func randomGroupCode() {
+    func randomGroupCode() -> String{
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        viewModel.groupCode = String((0..<6).map{ _ in letters.randomElement()! })
-        print("start random groupCode: \(viewModel.groupCode)")
-        while checkGroupCode(groupCode: viewModel.groupCode) {
-            viewModel.groupCode = String((0..<6).map{ _ in letters.randomElement()! })
+        var groupCode = String((0..<6).map{ _ in letters.randomElement()! })
+        print("start random groupCode: \(groupCode)")
+        while checkGroupCode(groupCode: groupCode) {
+            groupCode = String((0..<6).map{ _ in letters.randomElement()! })
             
         }
-        print("after check groupCode: \(viewModel.groupCode)")
-        print("group code db logged in: \(auth.currentUser)")
+        print("after check groupCode: \(groupCode)")
+        print("Random groupcode db logged in: \(auth.currentUser)")
         if auth.currentUser != nil {
-            let dbGroupCode = FamilyGroupCode(groupCode: viewModel.groupCode)
+            let dbGroupCode = FamilyGroupCode(groupCode: groupCode)
             do {
                 _ = try db.collection("GroupCodes").addDocument(from: dbGroupCode)
                 
-                print("after db groupCode: \(viewModel.groupCode)")
+                
+                print("after db groupCode: \(groupCode)")
             } catch {
                 print("Error saving to DB!")
-                viewModel.haveGroupCode = false
-                return
+               
+                
             }
             
         }
-        
+        return groupCode
     }
         
         

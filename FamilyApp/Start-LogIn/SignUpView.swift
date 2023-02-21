@@ -23,10 +23,10 @@ struct SignUpView: View {
     @State private var startApp = false
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ZStack {
                 
-                Color.indigo
+                Color.blue
                     .ignoresSafeArea()
                 
                 Circle()
@@ -45,9 +45,9 @@ struct SignUpView: View {
                     
                     TextField("Email Address", text: $email)
                         .keyboardType(.emailAddress)
-                        .submitLabel(.continue)
+                        //.submitLabel(.continue)
                         .autocorrectionDisabled(true)
-                        .textInputAutocapitalization(.never)
+                        //.textInputAutocapitalization(.never)
                         .padding()
                         .frame(width: 300, height: 50)
                         .background(Color.black.opacity(0.05))
@@ -56,9 +56,9 @@ struct SignUpView: View {
                     
                     SecureField("Password", text: $password)
                         .keyboardType(.alphabet)
-                        .submitLabel(.done)
+                        //.submitLabel(.done)
                         .autocorrectionDisabled(true)
-                        .textInputAutocapitalization(.none)
+                        //.textInputAutocapitalization(.none)
                         .padding()
                         .frame(width: 300, height: 50)
                         .background(Color.black.opacity(0.05))
@@ -84,11 +84,13 @@ struct SignUpView: View {
                 }
                 
             }
-            .ignoresSafeArea()
+            .environmentObject(viewModel)
+            //.ignoresSafeArea()
             //.navigationBarHidden(true)
-            NavigationLink("", destination: UserNameView(), isActive: $startApp)
             
-        } 
+            
+        }
+        NavigationLink("", destination: UserNameView(), isActive: $startApp)
     }
 }
 

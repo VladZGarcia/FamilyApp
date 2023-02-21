@@ -10,12 +10,12 @@ import MapKit
 import Firebase
 
 struct MapContentView: View {
-    @EnvironmentObject private var mapViewModel : MapContentViewModel
-    @EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
-    @EnvironmentObject private var viewModel : AppViewModel
+    @EnvironmentObject var mapViewModel : MapContentViewModel
+    //@EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
+    @EnvironmentObject var viewModel : AppViewModel
     
     let db = Firestore.firestore()
-    var locationManager = CLLocationManager()
+    //var locationManager = CLLocationManager()
     
     var body: some View {
         Map(coordinateRegion: $mapViewModel.region,
@@ -32,7 +32,7 @@ struct MapContentView: View {
                             .foregroundColor(.white)
                             .frame(width: 54, height: 54)
                             .shadow(radius: 2, x: 2, y: 2)
-                            .background(.blue)
+                            //.background(.blue)
                             .clipShape(Circle())
                         
                         Image("hund")
@@ -49,10 +49,14 @@ struct MapContentView: View {
             }
             
         }
-            .ignoresSafeArea()
+            //.ignoresSafeArea()
             .accentColor(Color(.systemPink))
             .onAppear {
                 mapViewModel.startLocationUpdates()
+                mapViewModel.listenToFirestore(groupCode: viewModel.groupCode)
+                if let userLocation = mapViewModel.location {
+                    viewModel.updateLocationInFirestore(userLatitude: userLocation.latitude, userLongitude: userLocation.longitude)
+                }
                
             }
     }
@@ -61,5 +65,7 @@ struct MapContentView: View {
 struct MapContentView_Previews: PreviewProvider {
 static var previews: some View {
     MapContentView()
+        .environmentObject(AppViewModel())
+        
 }
 }
