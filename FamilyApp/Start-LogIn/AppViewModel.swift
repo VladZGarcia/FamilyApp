@@ -13,8 +13,8 @@ import FirebaseAuth
 
 class AppViewModel: NSObject, ObservableObject {
     
-    @EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
-    @EnvironmentObject private var mapViewModel : MapContentViewModel
+    //@EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
+   //var mapViewModel : MapContentViewModel
     
     
     @Published var haveUserData = false
@@ -24,6 +24,7 @@ class AppViewModel: NSObject, ObservableObject {
     @Published var haveGroupCode = false
     @Published var groupCode = ""
     @Published var userName = ""
+    @Published var userId = ""
     
     let auth = Auth.auth()
     let db = Firestore.firestore()
@@ -31,6 +32,11 @@ class AppViewModel: NSObject, ObservableObject {
     var isSignedIn: Bool {
         return auth.currentUser != nil
     }
+    
+   // init(mapViewModel: MapContentViewModel) {
+   //     self.mapViewModel = mapViewModel
+   // }
+    
     
    // func anonymouslyLogin() {
    //     auth.signInAnonymously() {[weak self] authResult, error in
@@ -117,7 +123,7 @@ class AppViewModel: NSObject, ObservableObject {
                             case .success(let gUser) :
                                 userName = gUser.name
                                 groupCode = gUser.groupCode
-                                
+                                userId = gUser.userIDinFG
                                 haveUserData = true
                                 print("username: \(userName) groupcode: \(groupCode)")
                                 print("login -> Have userData: \(self.haveUserData)")
@@ -138,7 +144,7 @@ class AppViewModel: NSObject, ObservableObject {
     func signUp(email: String, password: String) {
         auth.createUser(withEmail: email, password: password) { result, error in
             guard result != nil, error == nil else {
-                self.signedIn = true
+                
                 return
             }
                
@@ -150,4 +156,35 @@ class AppViewModel: NSObject, ObservableObject {
         
         self.signedIn = false
     }
+    func updateLocationInFirestore(userLatitude: Double, userLongitude: Double) {
+        
+        //guard let userEmail = auth.currentUser?.email else {return}
+        // var refQuary: DocumentReference? = nil
+        // do {
+        //   refQuary = db.collection("FamilyGroup")
+        //       .document(groupCode)
+        //       .collection("users").whereField("email", isEqualTo: userEmail)
+        // } catch {
+        //     print("Error")
+        // }
+        // userId = refQuary!.documentID
+        // print("UserID: \(userId)")
+        //
+        //let query = db.collection("FamilyGroup")
+        //    .document(groupCode)
+        //    .collection("users").whereField("email", isEqualTo: userEmail)
+        db.collection("FamilyGroup")
+            .document(groupCode)
+            .collection("users").document(userId).updateData(["longitude": userLongitude, "latitude": userLongitude]) { err in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    
+                    print("Succes!")
+                    
+                    
+                }
+            }
+    }
+    
 }

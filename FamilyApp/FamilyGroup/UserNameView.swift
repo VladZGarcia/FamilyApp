@@ -12,9 +12,10 @@ import Firebase
 import FirebaseAuth
 
 struct UserNameView: View {
-    @EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
-    @EnvironmentObject private var viewModel : AppViewModel
-    @EnvironmentObject private var mapViewModel : MapContentViewModel
+    
+    @EnvironmentObject var viewModel : AppViewModel
+    @EnvironmentObject var familyGroupVM : FamilyGroupViewModel
+    @EnvironmentObject var mapViewModel : MapContentViewModel
     
     @State private var userName = ""
     @State private var nameInUse = 0
@@ -22,7 +23,7 @@ struct UserNameView: View {
     @State private var startApp = false
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ZStack {
                 Color.blue
                     .ignoresSafeArea()
@@ -48,16 +49,15 @@ struct UserNameView: View {
                         .cornerRadius(10)
                         .padding()
                     Button("Start") {
-                        familyGroupVM.randomGroupCode()
+                        viewModel.groupCode = familyGroupVM.randomGroupCode()
                         viewModel.userName = userName
                         viewModel.haveUserData = true
                         viewModel.haveGroupCode = true
+                        viewModel.signedIn = true
                         
-                        print("user: \(viewModel.haveUserData) code: \(viewModel.haveGroupCode)")
-                        mapViewModel.saveToFirestore(userGroupCode: viewModel.groupCode, userName: viewModel.userName)
-                        
-                            self.startApp = true
-                        
+                        if let id = mapViewModel.saveToFirestore(userGroupCode: viewModel.groupCode, userName: viewModel.userName) {
+                            viewModel.userId = id
+                        }
                     }
                     .foregroundColor(.white)
                     .frame(width: 300, height: 50)
@@ -81,7 +81,9 @@ struct UserNameView: View {
                             .padding()
                     })
                 }
+                
             }
+            .environmentObject(viewModel)
         }
         .navigationBarHidden(true)
         NavigationLink("", destination: ContentView(), isActive: $startApp)

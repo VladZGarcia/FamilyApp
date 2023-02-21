@@ -19,22 +19,24 @@ struct ContentView: View {
     
     var body: some View {
         
-        NavigationStack {
+        NavigationView {
             if viewModel.signedIn {
-                GetDataView()
-               
                 if viewModel.haveUserData{
-                    ShoppingListView()
+                    
+                    MapContentView()
+                } else {
+                    GetDataView()
                 }
             } else  {
                 LogInView()
             }
         }
-        .ignoresSafeArea()
+        //.environmentObject(viewModel)
+        .environmentObject(mapViewModel)
+        //.environmentObject(familyGroupVM)
+        //.ignoresSafeArea()
         .navigationBarHidden(true)
-        .onAppear {
-            print("haveUserData: \($viewModel.haveUserData) signedIn: \(viewModel.signedIn)")
-        }
+        
         
     }
 }
@@ -42,6 +44,10 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+           // .environmentObject(AppViewModel())
+           // .environmentObject(MapContentViewModel())
+           // .environmentObject(FamilyGroupViewModel())
+        
     }
 }
 
