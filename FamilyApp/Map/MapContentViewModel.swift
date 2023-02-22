@@ -16,9 +16,6 @@ enum MapDetails {
 }
 class MapContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     
-    //@EnvironmentObject  var familyGroupVM : FamilyGroupViewModel
-    //@EnvironmentObject  var viewModel : AppViewModel
-    
     @Published var region = MKCoordinateRegion(center:MapDetails.startingLocation,
                                                span: MapDetails.defaultSpan )
     @Published var userLocation = [Users(latitude: 37.3323341, longitude: -122.029)]
@@ -27,8 +24,8 @@ class MapContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     let auth = Auth.auth()
     var manager = CLLocationManager()
     var location : CLLocationCoordinate2D?
-    @Published var userId = ""
-    
+    @Published var mapUserId = ""
+    @Published var mapGroupCode = ""
     
     
     override init() {
@@ -38,37 +35,44 @@ class MapContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     func startLocationUpdates() {
         manager.requestWhenInUseAuthorization()
         manager.startUpdatingLocation()
-        
-        //if let location = manager.location{
-        //    saveToFirestore(userName: "user1", userLatitude: (location.coordinate.latitude), userLongitude: //(location.coordinate.longitude))
-        //
-        //}
-        //if CLLocationManager.locationServicesEnabled() {
-        //
-        //      locationManager = CLLocationManager()
-        //      if locationManager != nil {
-        
-        //      }
-        //
-        //      //locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-        //  } else {
-        //      locationManager?.requestWhenInUseAuthorization()
-        //      print("Show an alert lettin them know its off, go turn it on")
-        //  }
+     
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-         location = locations.first?.coordinate
-            
+        location = locations.first?.coordinate
+        
+        if let location = location  {
             print("Plats uppdaterad \(location)")
+            print("in mapContentView mapGroupCode: \(mapGroupCode)")
+            
+            //updateLocationInFirestore(userLatitude: location.latitude, userLongitude: location.longitude)
+            
+            
+        }
             
         
         
     }
     
-    func listenToFirestore(groupCode: String) {
+    func updateLocationInFirestore(userLatitude: Double, userLongitude: Double) {
         db.collection("FamilyGroup")
-            .document(groupCode)
+            .document(mapGroupCode)
+            .collection("users").document(mapUserId).updateData(["latitude": userLatitude, "longitude": userLongitude]) { err in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    print("Succes!")
+                }
+            }
+    }
+    
+    func listenToFirestore() {
+        print("in listenToFirestore mapGroupCode: \(mapGroupCode)")
+        if mapGroupCode == ""
+        {return}
+        
+        db.collection("FamilyGroup")
+            .document(mapGroupCode)
             .collection("users")
             .addSnapshotListener { snapshot, err in
                 //guard let snapshot = snapshot else {return}
@@ -96,6 +100,8 @@ class MapContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
                 }
             }
     }
+    
+    
     
     
     
@@ -141,28 +147,28 @@ class MapContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     //    }
     
     func saveToFirestore(userGroupCode: String, userName: String) -> String? {
-        let groupCode = userGroupCode
+        
         guard let userEmail = auth.currentUser?.email else {return nil}
         //print("start of save to db UserID: \(viewModel.userId)")
         print("start of db userEmail: \(userEmail)")
         var ref: DocumentReference? = nil
         
         if let location = manager.location{
-            let user = Users( name: userName, email: userEmail ,groupCode: groupCode, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            let user = Users( name: userName, email: userEmail ,groupCode: userGroupCode, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
             guard auth.currentUser != nil else {return nil}
             do {
                 ref = try db.collection("FamilyGroup")
-                    .document(groupCode)
+                    .document(userGroupCode)
                     .collection("users").addDocument(from: user)
                 print("saved user to DB!")
             } catch {
                 
                 print("Error saving to DB")
             }
-            userId = ref!.documentID
-            print("UserID: \(userId)")
+            mapUserId = ref!.documentID
+            print("UserID: \(mapUserId)")
             
-            let user3 = Users( name: userName, email: userEmail, userIDinFG: userId ,groupCode: groupCode, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            let user3 = Users( name: userName, email: userEmail, userIDinFG: mapUserId ,groupCode: userGroupCode, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
             if auth.currentUser != nil {
                 if let user2 = auth.currentUser {
                     do {
@@ -173,8 +179,8 @@ class MapContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
                     }
                     do {
                         db.collection("FamilyGroup")
-                            .document(groupCode)
-                            .collection("users").document(userId).updateData(["userIDinFG": userId]) { err in
+                            .document(userGroupCode)
+                            .collection("users").document(mapUserId).updateData(["userIDinFG": mapUserId]) { err in
                                 if let err = err {
                                     print("Error getting documents: \(err)")
                                 } else {
@@ -185,7 +191,7 @@ class MapContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
                 }
             }
         }
-        return userId
+        return mapUserId
     }
         
         

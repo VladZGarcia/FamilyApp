@@ -84,7 +84,7 @@ struct SignUpView: View {
                 }
                 
             }
-            .environmentObject(viewModel)
+            
             //.ignoresSafeArea()
             //.navigationBarHidden(true)
             

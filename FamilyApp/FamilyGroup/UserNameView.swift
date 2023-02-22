@@ -52,8 +52,9 @@ struct UserNameView: View {
                         viewModel.groupCode = familyGroupVM.randomGroupCode()
                         viewModel.userName = userName
                         viewModel.haveUserData = true
-                        viewModel.haveGroupCode = true
+                        //viewModel.haveGroupCode = true
                         viewModel.signedIn = true
+                        mapViewModel.mapGroupCode = viewModel.groupCode
                         
                         if let id = mapViewModel.saveToFirestore(userGroupCode: viewModel.groupCode, userName: viewModel.userName) {
                             viewModel.userId = id
@@ -67,7 +68,7 @@ struct UserNameView: View {
                     Text("You are signed in")
                         .foregroundColor(.black)
                     Button(action: {
-                        viewModel.signout()
+                        viewModel.signOut()
                         
                             startApp = true
                         
@@ -75,10 +76,10 @@ struct UserNameView: View {
                         Text("Sign Out")
                             .padding()
                             .foregroundColor(.white)
-                            .frame(width: 300, height: 50)
+                            .frame(width: 200, height: 50)
                             .background(Color.blue)
                             .cornerRadius(10)
-                            .padding()
+                            //.padding()
                     })
                 }
                 

@@ -12,7 +12,10 @@ import Firebase
 import FirebaseAuth
 
 struct FamilyGroupView: View {
-    @EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
+    @EnvironmentObject private var viewModel : AppViewModel
+    //@EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
+    @EnvironmentObject private var mapViewModel : MapContentViewModel
+    
     @State private var familyGroupCode = ""
     @State private var newGroupCode = ""
     @State private var userName = ""
@@ -69,8 +72,9 @@ struct FamilyGroupView: View {
                         .cornerRadius(10)
                         .border(.red, width: CGFloat(wrongGroupCode))
                     Button("Connect") {
-                        // Authenticate user
-                        //authenticateUser(username: username, password: password)
+                        if let id = mapViewModel.saveToFirestore(userGroupCode: newGroupCode, userName: viewModel.userName) {
+                            viewModel.userId = id
+                        }
                     }
                     .foregroundColor(.white)
                     .frame(width: 300, height: 50)

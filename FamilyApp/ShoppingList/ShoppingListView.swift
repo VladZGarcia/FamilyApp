@@ -48,7 +48,7 @@ struct ShoppingListView: View {
                             }
                         }
                 }.onAppear() {
-                    listenToFirestore()
+                    listenToFirestore(groupCode: viewModel.groupCode)
                 }
                 .navigationBarTitle("ShoppingList")
                 .navigationBarItems(trailing: EditButton())
@@ -61,12 +61,13 @@ struct ShoppingListView: View {
             storeItems.items.move(fromOffsets: source, toOffset: destination)
         }
         
-        func listenToFirestore() {
+    func listenToFirestore(groupCode: String) {
             //guard let user = Auth.auth().currentUser else {return}
             
-            db.collection("FamilyGroup").document(viewModel.groupCode).collection("items").addSnapshotListener { snapshot, err in
+            db.collection("FamilyGroup").document(groupCode).collection("items").addSnapshotListener { snapshot, err in
                 guard let snapshot = snapshot else {return}
                 
+                print("new items")
                 if let err = err {
                     print("Error getting document \(err)")
                 } else {
