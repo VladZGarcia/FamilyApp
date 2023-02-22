@@ -12,9 +12,12 @@ import FirebaseAuth
 
 
 struct GetDataView: View {
-    @EnvironmentObject private var viewModel : AppViewModel
+    
+    //@Environment(\.presentationMode) var presentationMode
+    
+    @EnvironmentObject var viewModel : AppViewModel
     //@EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
-    @EnvironmentObject private var mapViewModel : MapContentViewModel
+    @EnvironmentObject var mapViewModel : MapContentViewModel
     @State private var startApp = false
     
     var body: some View {
@@ -23,12 +26,17 @@ struct GetDataView: View {
         }
             .onAppear() {
                 viewModel.getUserdata()
+                
+                
                 if viewModel.haveUserData {
-                    mapViewModel.userId = viewModel.userId
+                    
                     startApp = true
                 }
+                   
+
             }
         NavigationLink("", destination: ContentView(), isActive: $startApp)
             .environmentObject(mapViewModel)
+                   
     }
 }

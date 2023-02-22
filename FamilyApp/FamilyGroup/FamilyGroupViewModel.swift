@@ -12,12 +12,8 @@ import FirebaseAuth
 
 class FamilyGroupViewModel: NSObject, ObservableObject {
     
-    //@EnvironmentObject var viewModel : AppViewModel
-    
     let db = Firestore.firestore()
     let auth = Auth.auth()
-    //@Published var groupCode = ""
-    //@Published var userName = ""
     
     func randomGroupCode() -> String{
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"

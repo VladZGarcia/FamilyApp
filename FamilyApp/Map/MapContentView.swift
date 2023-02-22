@@ -52,12 +52,17 @@ struct MapContentView: View {
             //.ignoresSafeArea()
             .accentColor(Color(.systemPink))
             .onAppear {
-                mapViewModel.startLocationUpdates()
-                mapViewModel.listenToFirestore(groupCode: viewModel.groupCode)
-                if let userLocation = mapViewModel.location {
-                    viewModel.updateLocationInFirestore(userLatitude: userLocation.latitude, userLongitude: userLocation.longitude)
+                print("in mapContentView mapGroupCode: \(mapViewModel.mapGroupCode)")
+                if viewModel.haveUserData {
+                    mapViewModel.mapUserId = viewModel.userId
+                    mapViewModel.mapGroupCode = viewModel.groupCode
+                    viewModel.haveDataForDB = true
                 }
-               
+                if viewModel.haveDataForDB {
+                    print("in mapContentView mapGroupCode: \(mapViewModel.mapGroupCode)")
+                    mapViewModel.startLocationUpdates()
+                    mapViewModel.listenToFirestore()
+                }
             }
     }
     

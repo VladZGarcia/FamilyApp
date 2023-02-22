@@ -22,9 +22,9 @@ struct FamilyAppApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(viewModel)
                 .environmentObject(familyGroupVM)
                 .environmentObject(mapViewModel)
+                .environmentObject(viewModel)
         }
     }
 }

@@ -12,8 +12,8 @@ import Firebase
 import FirebaseAuth
 
 struct LogInView: View {
-    @EnvironmentObject private var viewModel : AppViewModel
-    @EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
+    @EnvironmentObject var viewModel : AppViewModel
+    @EnvironmentObject var familyGroupVM : FamilyGroupViewModel
     
     @State private var email = ""
     @State private var password = ""
@@ -84,10 +84,12 @@ struct LogInView: View {
                 }
             }
         }
-        
         //.ignoresSafeArea()
         //.navigationBarHidden(true)
-        
+       // .onAppear() {
+       //     viewModel.signedIn = viewModel.isSignedIn
+       //
+       // }
         NavigationLink("", destination: ContentView(), isActive: $viewModel.signedIn)
             .environmentObject(viewModel)
     }
