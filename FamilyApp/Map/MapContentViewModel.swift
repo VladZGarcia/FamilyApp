@@ -24,6 +24,7 @@ class MapContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     let auth = Auth.auth()
     var manager = CLLocationManager()
     var location : CLLocationCoordinate2D?
+    @Published var mapSignedIn = false
     @Published var mapUserId = ""
     @Published var mapGroupCode = ""
     
@@ -33,9 +34,17 @@ class MapContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         manager.delegate = self
     }
     func startLocationUpdates() {
-        manager.requestWhenInUseAuthorization()
-        manager.startUpdatingLocation()
-     
+        manager.requestAlwaysAuthorization()
+        
+        if mapSignedIn {
+            manager.startUpdatingLocation()
+            manager.allowsBackgroundLocationUpdates = true
+            manager.showsBackgroundLocationIndicator = true
+        } else {
+            manager.stopUpdatingLocation()
+            manager.allowsBackgroundLocationUpdates = false
+            manager.showsBackgroundLocationIndicator = false
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -45,7 +54,7 @@ class MapContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
             print("Plats uppdaterad \(location)")
             print("in mapContentView mapGroupCode: \(mapGroupCode)")
             
-            //updateLocationInFirestore(userLatitude: location.latitude, userLongitude: location.longitude)
+            updateLocationInFirestore(userLatitude: location.latitude, userLongitude: location.longitude)
             
             
         }
@@ -61,6 +70,7 @@ class MapContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
                 if let err = err {
                     print("Error getting documents: \(err)")
                 } else {
+                    self.listenToFirestore()
                     print("Succes!")
                 }
             }
@@ -171,6 +181,7 @@ class MapContentViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
             let user3 = Users( name: userName, email: userEmail, userIDinFG: mapUserId ,groupCode: userGroupCode, latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
             if auth.currentUser != nil {
                 if let user2 = auth.currentUser {
+                   
                     do {
                         _ = try db.collection("Users").document(user2.uid).collection("userinfo").addDocument(from: user3)
                         print("saved user3 to DB!")

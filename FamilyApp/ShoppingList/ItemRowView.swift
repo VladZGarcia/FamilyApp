@@ -11,8 +11,8 @@ import Firebase
 import FirebaseAuth
 
 struct ItemRowView: View {
-    //@EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
-    @EnvironmentObject private var viewModel : AppViewModel
+    @EnvironmentObject var mapViewModel : MapContentViewModel
+    //@EnvironmentObject private var viewModel : AppViewModel
     
     let db = Firestore.firestore()
     let item : ItemList
@@ -25,7 +25,7 @@ struct ItemRowView: View {
                 if let id = item.id
                
                 {
-                    db.collection("FamilyGroup").document(viewModel.groupCode)
+                    db.collection("FamilyGroup").document(mapViewModel.mapGroupCode)
                         .collection("items").document(id).updateData(["isChecked": !item.isChecked])
                 }
             }) {

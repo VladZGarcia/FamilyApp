@@ -22,6 +22,7 @@ class AppViewModel: NSObject, ObservableObject {
     @Published var userName = ""
     @Published var userId = ""
     @Published var loggedIn = false
+    @Published var haveGroupCode = false
     
     let auth = Auth.auth()
     let db = Firestore.firestore()
@@ -39,49 +40,11 @@ class AppViewModel: NSObject, ObservableObject {
                 return
             }
             
-            self.loggedIn = true
+            self.signedIn = true
             
-        print("login -> Signedin: \(self.loggedIn)")
+        print("login -> Signedin: \(self.signedIn)")
         }
     }
-    
-   //func getFamilyGroup() {
-   //    print("getFamilyGroup -> Have groupcode: \(haveGroupCode)")
-   //    //var dbGroupCode = ""
-   //    if auth.currentUser != nil {
-   //        if let user = auth.currentUser {
-   //            print("auth currentuser: \(user.uid)")
-
-   //            db.collection("UserGroupCodes").document(user.uid).collection("groupcodes").addSnapshotListener { [self] (snapshot, error) in
-   //                guard let snapshot = snapshot else {return}
-   //
-   //                if let err = error {
-   //                    print("Error getting document \(err)")
-   //                } else {
-   //
-   //                    for document in snapshot.documents {
-   //                        let result = Result{
-   //                            try document.data(as: FamilyGroupCode.self)
-   //                        }
-   //                        switch result {
-   //                        case .success(let gCode) :
-   //                            groupCode = gCode.groupCode
-   //                            print("groupcode: \(groupCode)")
-   //
-   //                            haveGroupCode = true
-   //                            print("login -> Have groupcode: \(haveGroupCode)")
-   //                        case .failure(let error) :
-   //                            print("Error decoding item: \(error)")
-   //                        }
-   //                    }
-   //                }
-   //
-   //            }
-   //
-   //        }
-   //    }
-   //
-   //}
     
     func getUserdata() {
         print("getUserData -> Have userdata: \(self.haveUserData)")
@@ -107,6 +70,8 @@ class AppViewModel: NSObject, ObservableObject {
                                 groupCode = gUser.groupCode
                                 userId = gUser.userIDinFG
                                 haveUserData = true
+                                haveGroupCode = true
+                                signedIn = true
                                 print("username: \(userName) groupcode: \(groupCode)")
                                 print("login -> Have userData: \(self.haveUserData)")
                             case .failure(let error) :
@@ -136,7 +101,7 @@ class AppViewModel: NSObject, ObservableObject {
     func signOut() {
         try? auth.signOut()
         
-        self.loggedIn = false
+        self.signedIn = false
     }
   
     

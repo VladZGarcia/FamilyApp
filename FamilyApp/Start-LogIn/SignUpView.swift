@@ -23,7 +23,7 @@ struct SignUpView: View {
     @State private var startApp = false
     
     var body: some View {
-        NavigationView {
+        
             ZStack {
                 
                 Color.blue
@@ -85,11 +85,11 @@ struct SignUpView: View {
                 
             }
             
-            //.ignoresSafeArea()
-            //.navigationBarHidden(true)
+            .ignoresSafeArea()
+            .navigationBarHidden(true)
             
             
-        }
+        
         NavigationLink("", destination: UserNameView(), isActive: $startApp)
     }
 }

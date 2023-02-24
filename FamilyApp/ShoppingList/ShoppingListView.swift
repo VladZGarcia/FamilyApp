@@ -11,8 +11,8 @@ import Firebase
 import FirebaseAuth
 
 struct ShoppingListView: View {
-    
-    @EnvironmentObject private var viewModel : AppViewModel
+    @EnvironmentObject var mapViewModel : MapContentViewModel
+    //@EnvironmentObject private var viewModel : AppViewModel
     
     let db = Firestore.firestore()
     @State var newItem : String = ""
@@ -43,12 +43,12 @@ struct ShoppingListView: View {
                                 if let id = item.id
                                    
                                 {
-                                    db.collection("FamilyGroup").document(viewModel.groupCode).collection("items").document(id).delete()
+                                    db.collection("FamilyGroup").document(mapViewModel.mapGroupCode).collection("items").document(id).delete()
                                 }
                             }
                         }
                 }.onAppear() {
-                    listenToFirestore(groupCode: viewModel.groupCode)
+                    listenToFirestore()
                 }
                 .navigationBarTitle("ShoppingList")
                 .navigationBarItems(trailing: EditButton())
@@ -61,10 +61,10 @@ struct ShoppingListView: View {
             storeItems.items.move(fromOffsets: source, toOffset: destination)
         }
         
-    func listenToFirestore(groupCode: String) {
+    func listenToFirestore() {
             //guard let user = Auth.auth().currentUser else {return}
             
-            db.collection("FamilyGroup").document(groupCode).collection("items").addSnapshotListener { snapshot, err in
+            db.collection("FamilyGroup").document(mapViewModel.mapGroupCode).collection("items").addSnapshotListener { snapshot, err in
                 guard let snapshot = snapshot else {return}
                 
                 print("new items")
@@ -93,7 +93,7 @@ struct ShoppingListView: View {
         //guard let user = Auth.auth().currentUser else {return}
         
         do {
-            _ = try  db.collection("FamilyGroup").document(viewModel.groupCode).collection("items").addDocument(from: item)
+            _ = try  db.collection("FamilyGroup").document(mapViewModel.mapGroupCode).collection("items").addDocument(from: item)
         } catch {
             print("Error savin to DB")
         }
