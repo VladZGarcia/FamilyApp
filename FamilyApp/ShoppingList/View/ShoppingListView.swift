@@ -14,6 +14,7 @@ struct ShoppingListView: View {
     
     @EnvironmentObject var mapViewModel : MapContentViewModel
     @StateObject var shoppingListViewModel = ShoppingListViewModel()
+    @EnvironmentObject var viewModel : AppViewModel
     
     var body: some View {
         NavigationView {
@@ -22,10 +23,3 @@ struct ShoppingListView: View {
     }
 }
 
-struct ShoppingListView_Previews: PreviewProvider {
-    static var previews: some View {
-        ShoppingListView()
-            .environmentObject(MapContentViewModel())
-        
-    }
-}

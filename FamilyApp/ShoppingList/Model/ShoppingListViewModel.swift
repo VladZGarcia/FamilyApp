@@ -26,7 +26,7 @@ class ShoppingListViewModel: NSObject, ObservableObject {
     }
     
     func listenToFirestore(_ groupCode: String) {
-        
+        print("ShoppingList--->Loading from firestore")
         db.collection("FamilyGroup").document(groupCode).collection("items").addSnapshotListener {  snapshot, err in
             guard let snapshot = snapshot else {return}
             
@@ -34,13 +34,14 @@ class ShoppingListViewModel: NSObject, ObservableObject {
             if let err = err {
                 print("Error getting document \(err)")
             } else {
-                //self.storeItems.items.removeAll()
+                self.storeItems.items.removeAll()
                 for document in snapshot.documents {
                     let result = Result{
                         try document.data(as: ItemList.self)
                     }
                     switch result {
                     case .success(let item) :
+                        print("Succes reading Shopinglist!")
                         self.storeItems.items.append(item)
                     case .failure(let error) :
                         print("Error decoding item: \(error)")
