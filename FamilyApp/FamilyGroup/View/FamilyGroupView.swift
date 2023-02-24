@@ -75,7 +75,6 @@ struct FamilyGroupView: View {
                 Button("Connect") {
                     mapViewModel.mapGroupCode = newGroupCode
                     viewModel.groupCode = newGroupCode
-                    startApp = true
                     viewModel.haveGroupCode = true
                     viewModel.haveUserData = true
                     if let id = mapViewModel.updateDataInFirestore(userGroupCode: newGroupCode, userName: viewModel.userName) {

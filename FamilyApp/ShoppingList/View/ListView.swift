@@ -12,11 +12,11 @@ import FirebaseAuth
 
 struct ListView: View {
     
+    @EnvironmentObject var viewModel : AppViewModel
     @EnvironmentObject var mapViewModel : MapContentViewModel
     @StateObject var shoppingListViewModel = ShoppingListViewModel()
-    @EnvironmentObject var viewModel : AppViewModel
-    
     @ObservedObject var storeItems = StoreItems()
+    
     let db = Firestore.firestore()
     @State var newItem : String = ""
     
@@ -47,20 +47,18 @@ struct ListView: View {
                             }
                         }
                     }
-            }.onAppear() {
-                if viewModel.haveUserData {
-                    shoppingListViewModel.listenToFirestore(mapViewModel.mapGroupCode)
-                }
+                    .onAppear() {
+                        if viewModel.haveUserData {
+                            print("ShoppingList----> HaveuserData pre listenToFirestore")
+                            shoppingListViewModel.listenToFirestore(mapViewModel.mapGroupCode)
+                        }
+                    }
+                    .navigationBarTitle("ShoppingList")
+                    .navigationBarItems(trailing: EditButton())
             }
-            .navigationBarTitle("ShoppingList")
-            .navigationBarItems(trailing: EditButton())
+            .padding()
         }
-        .padding()
     }
-}
-
-struct ListView_Previews: PreviewProvider {
-    static var previews: some View {
-        ListView()
-    }
+    
+    
 }

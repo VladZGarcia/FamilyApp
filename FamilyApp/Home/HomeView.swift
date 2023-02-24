@@ -32,7 +32,7 @@ struct HomeView: View {
                     .tabItem {
                         Label("group", systemImage:"person.3.sequence.fill")
                     }
-                
+                    .toolbarBackground(Color.white, for: .tabBar)
             }
             .edgesIgnoringSafeArea(.vertical)
             .tint(.pink)
