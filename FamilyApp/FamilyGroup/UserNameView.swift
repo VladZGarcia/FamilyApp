@@ -23,7 +23,7 @@ struct UserNameView: View {
     @State private var startApp = false
     
     var body: some View {
-        NavigationView {
+        
             ZStack {
                 Color.blue
                     .ignoresSafeArea()
@@ -50,14 +50,17 @@ struct UserNameView: View {
                         .padding()
                     Button("Start") {
                         viewModel.groupCode = familyGroupVM.randomGroupCode()
+                        mapViewModel.mapGroupCode = viewModel.groupCode
+                        //viewModel.groupCode = "02Evg5"
                         viewModel.userName = userName
                         viewModel.haveUserData = true
                         //viewModel.haveGroupCode = true
                         viewModel.signedIn = true
-                        mapViewModel.mapGroupCode = viewModel.groupCode
+                        
                         
                         if let id = mapViewModel.saveToFirestore(userGroupCode: viewModel.groupCode, userName: viewModel.userName) {
                             viewModel.userId = id
+                            mapViewModel.mapUserId = id
                         }
                     }
                     .foregroundColor(.white)
@@ -85,7 +88,7 @@ struct UserNameView: View {
                 
             }
             .environmentObject(viewModel)
-        }
+        
         .navigationBarHidden(true)
         NavigationLink("", destination: ContentView(), isActive: $startApp)
        

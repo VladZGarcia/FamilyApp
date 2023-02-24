@@ -13,17 +13,17 @@ import FirebaseAuth
 
 struct FamilyGroupView: View {
     @EnvironmentObject private var viewModel : AppViewModel
-    //@EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
+    @EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
     @EnvironmentObject private var mapViewModel : MapContentViewModel
-    
+    @Environment(\.presentationMode) var presentationMode
     @State private var familyGroupCode = ""
     @State private var newGroupCode = ""
     @State private var userName = ""
     @State private var wrongGroupCode = 0
-    
+    @State private var startApp = false
     
     var body: some View {
-        NavigationView {
+        
             ZStack {
                 Color.blue
                     .ignoresSafeArea()
@@ -42,7 +42,7 @@ struct FamilyGroupView: View {
                         .bold()
                         
                     
-                    Text("\(familyGroupCode)")
+                    Text("\(mapViewModel.mapGroupCode)")
                         .font(.largeTitle)
                         .bold()
                         .foregroundColor(.red)
@@ -58,32 +58,63 @@ struct FamilyGroupView: View {
                     .cornerRadius(10)
                     
                     Button {
-                        //share sheet
+                        share()
                     } label: {
                         Text("Share to your familymembers")
                             .bold()
                             .foregroundColor(.blue)
                             .padding()
                     }
-                    SecureField("FamilyGroupCode", text: $newGroupCode)
+                    TextField("FamilyGroupCode", text: $newGroupCode)
                         //.padding()
                         .frame(width: 300, height: 50)
                         .background(Color.black.opacity(0.05))
                         .cornerRadius(10)
                         .border(.red, width: CGFloat(wrongGroupCode))
                     Button("Connect") {
+                        mapViewModel.mapGroupCode = newGroupCode
+                        viewModel.groupCode = newGroupCode
+                        startApp = true
+                        viewModel.haveGroupCode = true
+                        viewModel.haveUserData = true
                         if let id = mapViewModel.saveToFirestore(userGroupCode: newGroupCode, userName: viewModel.userName) {
                             viewModel.userId = id
+                            mapViewModel.mapUserId = id
                         }
+                        presentationMode.wrappedValue.dismiss()
                     }
                     .foregroundColor(.white)
                     .frame(width: 300, height: 50)
                     .background(Color.blue)
                     .cornerRadius(10)
+                    
+                    Button {
+                        viewModel.signOut()
+                        startApp = true
+                        viewModel.haveGroupCode = false
+                        viewModel.haveUserData = false
+                        
+                        mapViewModel.mapSignedIn = false
+                        mapViewModel.startLocationUpdates()
+                       
+                    } label: {
+                        Text("SignOut")
+                            .bold()
+                            .foregroundColor(.blue)
+                            .padding()
+                    }
                 }
-            }
+            
             .navigationBarHidden(true)
+            //NavigationLink("", destination: ContentView(), isActive: $startApp)
+            //    .environmentObject(viewModel)
         }
+    }
+    
+    func share() {
+        //guard let shareGroupCode = "\(mapViewModel.mapGroupCode)" else {return}
+        let activityVC = UIActivityViewController(activityItems: [mapViewModel.mapGroupCode], applicationActivities: nil)
+        UIApplication.shared.windows.first?.rootViewController?.present(activityVC,animated: true, completion: nil)
     }
 }
 

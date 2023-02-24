@@ -13,7 +13,7 @@ import FirebaseAuth
 
 struct GetDataView: View {
     
-    //@Environment(\.presentationMode) var presentationMode
+    @Environment(\.presentationMode) var presentationMode
     
     @EnvironmentObject var viewModel : AppViewModel
     //@EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
@@ -21,13 +21,14 @@ struct GetDataView: View {
     @State private var startApp = false
     
     var body: some View {
-        NavigationView {
+        
+            Color.blue
             Text("Getting data")
-        }
+        
             .onAppear() {
                 viewModel.getUserdata()
                 
-                
+                presentationMode.wrappedValue.dismiss()
                 if viewModel.haveUserData {
                     
                     startApp = true
@@ -36,7 +37,7 @@ struct GetDataView: View {
 
             }
         NavigationLink("", destination: ContentView(), isActive: $startApp)
-            .environmentObject(mapViewModel)
+        
                    
     }
 }

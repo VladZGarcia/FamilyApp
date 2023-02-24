@@ -14,13 +14,13 @@ import FirebaseAuth
 struct LogInView: View {
     @EnvironmentObject var viewModel : AppViewModel
     @EnvironmentObject var familyGroupVM : FamilyGroupViewModel
-    
+    @Environment(\.presentationMode) var presentationMode
     @State private var email = ""
     @State private var password = ""
     @State private var startApp = false
     
     var body: some View {
-        NavigationView {
+        
             ZStack {
                 Color.blue
                     .ignoresSafeArea()
@@ -68,6 +68,7 @@ struct LogInView: View {
                         }
                         viewModel.logIn(email: email, password: password)
                         startApp = true
+                        presentationMode.wrappedValue.dismiss()
                     }
                     .padding()
                     .foregroundColor(.white)
@@ -83,15 +84,15 @@ struct LogInView: View {
                     
                 }
             }
-        }
+        
         //.ignoresSafeArea()
         //.navigationBarHidden(true)
        // .onAppear() {
        //     viewModel.signedIn = viewModel.isSignedIn
        //
        // }
-        NavigationLink("", destination: ContentView(), isActive: $viewModel.signedIn)
-            .environmentObject(viewModel)
+        //NavigationLink("", destination: ContentView(), isActive: $startApp)
+        //    .environmentObject(viewModel)
     }
 }
 
