@@ -22,24 +22,23 @@ struct ContentView: View {
         
         NavigationView {
             if viewModel.signedIn {
-                    if viewModel.haveUserData{
-                        HomeView()
-                    } else {
-                        GetDataView()
-                    }
+                if viewModel.haveUserData{
+                    HomeView()
+                } else {
+                    GetDataView()
+                }
                 
             } else {
                 LogInView()
             }
         }
-        
         .ignoresSafeArea()
         .navigationBarHidden(true)
         .onAppear {
-           
-            viewModel.signedIn = viewModel.isSignedIn
-       }
-         
+            
+            //viewModel.signedIn = viewModel.isSignedIn
+        }
+        
     }
 }
 

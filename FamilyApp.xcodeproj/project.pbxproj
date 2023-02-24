@@ -12,6 +12,7 @@
 		640936AF29967BBE0016203F /* FamilyGroupCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640936AE29967BBE0016203F /* FamilyGroupCode.swift */; };
 		6435E5B029883A8C001A355B /* MapContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6435E5AF29883A8C001A355B /* MapContentView.swift */; };
 		6435E5B329886966001A355B /* MapContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6435E5B229886966001A355B /* MapContentViewModel.swift */; };
+		644F92E329A8FBE2006CA827 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 644F92E229A8FBE2006CA827 /* ListView.swift */; };
 		6452FBE929A4CD5D0073C6F5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6452FBE829A4CD5D0073C6F5 /* HomeView.swift */; };
 		646AE6D82996AA3C007E698E /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646AE6D72996AA3C007E698E /* Users.swift */; };
 		646AE6DC299838E5007E698E /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646AE6DB299838E5007E698E /* SignUpView.swift */; };
@@ -64,6 +65,7 @@
 		6435E5AF29883A8C001A355B /* MapContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapContentView.swift; sourceTree = "<group>"; };
 		6435E5B129885A71001A355B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		6435E5B229886966001A355B /* MapContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapContentViewModel.swift; sourceTree = "<group>"; };
+		644F92E229A8FBE2006CA827 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		6452FBE829A4CD5D0073C6F5 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		646AE6D72996AA3C007E698E /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		646AE6DB299838E5007E698E /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -120,6 +122,108 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		644F92D629A8F146006CA827 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				6490100E299CD9D1001C15DF /* ItemList.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		644F92D729A8F177006CA827 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				640936AE29967BBE0016203F /* FamilyGroupCode.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		644F92D829A8F194006CA827 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				646AE6E4299960DC007E698E /* UserNameView.swift */,
+				640936AA299667300016203F /* FamilyGroupView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		644F92D929A8F1AD006CA827 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				640936AC29966FB00016203F /* FamilyGroupViewModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		644F92DA29A8F1C1006CA827 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6435E5AF29883A8C001A355B /* MapContentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		644F92DB29A8F1C5006CA827 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6435E5B229886966001A355B /* MapContentViewModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		644F92DC29A8F1C9006CA827 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				64832ED829887D8700284993 /* Place.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		644F92DD29A8F1F8006CA827 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				64A0FCE52987D33E004B18AA /* ContentView.swift */,
+				64834E87299F8DEE0044D29F /* GetDataView.swift */,
+				646AE6DB299838E5007E698E /* SignUpView.swift */,
+				646AE6DD299950F2007E698E /* LogInView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		644F92DE29A8F1FB006CA827 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				646AE6E229995313007E698E /* AppViewModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		644F92DF29A8F201006CA827 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				646AE6D72996AA3C007E698E /* Users.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		644F92E029A8F26D006CA827 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6490100A299CD8FC001C15DF /* ShoppingListView.swift */,
+				6490100C299CD983001C15DF /* ItemRowView.swift */,
+				644F92E229A8FBE2006CA827 /* ListView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		644F92E129A8F2B4006CA827 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				64834E8929A0E05E0044D29F /* ShoppingListViewModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		6452FBEA29A4D2460073C6F5 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,12 +235,9 @@
 		646AE6DF29995176007E698E /* Start-LogIn */ = {
 			isa = PBXGroup;
 			children = (
-				64A0FCE32987D33E004B18AA /* FamilyAppApp.swift */,
-				64A0FCE52987D33E004B18AA /* ContentView.swift */,
-				646AE6DD299950F2007E698E /* LogInView.swift */,
-				646AE6DB299838E5007E698E /* SignUpView.swift */,
-				646AE6E229995313007E698E /* AppViewModel.swift */,
-				64834E87299F8DEE0044D29F /* GetDataView.swift */,
+				644F92DF29A8F201006CA827 /* Data */,
+				644F92DE29A8F1FB006CA827 /* Model */,
+				644F92DD29A8F1F8006CA827 /* View */,
 			);
 			path = "Start-LogIn";
 			sourceTree = "<group>";
@@ -144,10 +245,9 @@
 		646AE6E0299951B1007E698E /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				6435E5AF29883A8C001A355B /* MapContentView.swift */,
-				6435E5B229886966001A355B /* MapContentViewModel.swift */,
-				64832ED829887D8700284993 /* Place.swift */,
-				646AE6D72996AA3C007E698E /* Users.swift */,
+				644F92DC29A8F1C9006CA827 /* Data */,
+				644F92DB29A8F1C5006CA827 /* Model */,
+				644F92DA29A8F1C1006CA827 /* View */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -155,10 +255,9 @@
 		646AE6E12999528C007E698E /* FamilyGroup */ = {
 			isa = PBXGroup;
 			children = (
-				640936AE29967BBE0016203F /* FamilyGroupCode.swift */,
-				640936AA299667300016203F /* FamilyGroupView.swift */,
-				640936AC29966FB00016203F /* FamilyGroupViewModel.swift */,
-				646AE6E4299960DC007E698E /* UserNameView.swift */,
+				644F92D729A8F177006CA827 /* Data */,
+				644F92D929A8F1AD006CA827 /* Model */,
+				644F92D829A8F194006CA827 /* View */,
 			);
 			path = FamilyGroup;
 			sourceTree = "<group>";
@@ -166,10 +265,9 @@
 		64901009299CD8DE001C15DF /* ShoppingList */ = {
 			isa = PBXGroup;
 			children = (
-				6490100A299CD8FC001C15DF /* ShoppingListView.swift */,
-				6490100C299CD983001C15DF /* ItemRowView.swift */,
-				6490100E299CD9D1001C15DF /* ItemList.swift */,
-				64834E8929A0E05E0044D29F /* ShoppingListViewModel.swift */,
+				644F92D629A8F146006CA827 /* Data */,
+				644F92E129A8F2B4006CA827 /* Model */,
+				644F92E029A8F26D006CA827 /* View */,
 			);
 			path = ShoppingList;
 			sourceTree = "<group>";
@@ -197,6 +295,7 @@
 		64A0FCE22987D33E004B18AA /* FamilyApp */ = {
 			isa = PBXGroup;
 			children = (
+				64A0FCE32987D33E004B18AA /* FamilyAppApp.swift */,
 				6452FBEA29A4D2460073C6F5 /* Home */,
 				64901009299CD8DE001C15DF /* ShoppingList */,
 				646AE6E12999528C007E698E /* FamilyGroup */,
@@ -394,6 +493,7 @@
 				64A0FCE42987D33E004B18AA /* FamilyAppApp.swift in Sources */,
 				640936AB299667300016203F /* FamilyGroupView.swift in Sources */,
 				64832ED929887D8800284993 /* Place.swift in Sources */,
+				644F92E329A8FBE2006CA827 /* ListView.swift in Sources */,
 				646AE6DC299838E5007E698E /* SignUpView.swift in Sources */,
 				6490100D299CD983001C15DF /* ItemRowView.swift in Sources */,
 				6435E5B329886966001A355B /* MapContentViewModel.swift in Sources */,

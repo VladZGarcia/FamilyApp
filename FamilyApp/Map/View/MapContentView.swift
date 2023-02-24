@@ -29,11 +29,11 @@ struct MapContentView: View {
                     ZStack {
                         Image(systemName: "mappin.circle.fill")
                             .font(.title)
-                            //.resizable()
+                        //.resizable()
                             .foregroundColor(.white)
                             .frame(width: 54, height: 54)
                             .shadow(radius: 2, x: 2, y: 2)
-                            //.background(.blue)
+                        //.background(.blue)
                             .clipShape(Circle())
                         
                         Image("hund")
@@ -49,6 +49,7 @@ struct MapContentView: View {
                         .offset(x: 0, y: -3)
                     Text(user.name)
                 }
+                .ignoresSafeArea()
             }
             
         }
@@ -73,9 +74,9 @@ struct MapContentView: View {
     
 }
 struct MapContentView_Previews: PreviewProvider {
-static var previews: some View {
-    MapContentView()
-        .environmentObject(AppViewModel())
+    static var previews: some View {
+        MapContentView()
+            .environmentObject(AppViewModel())
         
-}
+    }
 }

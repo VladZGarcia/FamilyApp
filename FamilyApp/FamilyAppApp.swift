@@ -11,7 +11,7 @@ import FirebaseAuth
 
 @main
 struct FamilyAppApp: App {
-  
+    
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
