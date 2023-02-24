@@ -42,7 +42,7 @@ class AppViewModel: NSObject, ObservableObject {
             
             self.signedIn = true
             
-        print("login -> Signedin: \(self.signedIn)")
+            print("login -> Signedin: \(self.signedIn)")
         }
     }
     
@@ -85,7 +85,7 @@ class AppViewModel: NSObject, ObservableObject {
             }
         }
     }
-        
+    
     
     
     func signUp(email: String, password: String) {
@@ -94,7 +94,7 @@ class AppViewModel: NSObject, ObservableObject {
                 
                 return
             }
-               
+            
         }
     }
     
@@ -103,6 +103,6 @@ class AppViewModel: NSObject, ObservableObject {
         
         self.signedIn = false
     }
-  
+    
     
 }

@@ -34,42 +34,42 @@ class FamilyGroupViewModel: NSObject, ObservableObject {
                 print("after db groupCode: \(groupCode)")
             } catch {
                 print("Error saving to DB!")
-               
+                
                 
             }
             
         }
         return groupCode
     }
-        
-        
-        func checkGroupCode(groupCode: String) -> Bool {
-            var codeExist = false
-            let dbcheck = db.collection("GroupCodes")
-            dbcheck.addSnapshotListener { snapshot, err in
-                guard let snapshot = snapshot else {return}
-                if let err = err {
-                    print("error getting document: \(err)")
-                } else {
-                    for document in snapshot.documents {
-                        let result = Result{
-                            try document.data(as: FamilyGroupCode.self)
+    
+    
+    func checkGroupCode(groupCode: String) -> Bool {
+        var codeExist = false
+        let dbcheck = db.collection("GroupCodes")
+        dbcheck.addSnapshotListener { snapshot, err in
+            guard let snapshot = snapshot else {return}
+            if let err = err {
+                print("error getting document: \(err)")
+            } else {
+                for document in snapshot.documents {
+                    let result = Result{
+                        try document.data(as: FamilyGroupCode.self)
+                    }
+                    switch result {
+                    case .success(let gCode) :
+                        if groupCode == gCode.groupCode {
+                            print("Codeexist groupCode: \(groupCode) gCode: \(gCode.groupCode)")
+                            codeExist = true
+                        } else {
+                            
                         }
-                        switch result {
-                        case .success(let gCode) :
-                            if groupCode == gCode.groupCode {
-                                print("Codeexist groupCode: \(groupCode) gCode: \(gCode.groupCode)")
-                                codeExist = true
-                            } else {
-                                
-                            }
-                        case .failure(let error) :
-                            print("Error decoding item: \(error)")
-                        }
+                    case .failure(let error) :
+                        print("Error decoding item: \(error)")
                     }
                 }
             }
-            return codeExist
         }
+        return codeExist
+    }
     
 }

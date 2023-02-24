@@ -16,28 +16,15 @@ struct GetDataView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @EnvironmentObject var viewModel : AppViewModel
-    //@EnvironmentObject private var familyGroupVM : FamilyGroupViewModel
     @EnvironmentObject var mapViewModel : MapContentViewModel
     @State private var startApp = false
     
     var body: some View {
-        
-            Color.blue
-            Text("Getting data")
-        
+        Color.blue
+        Text("Getting data")
             .onAppear() {
                 viewModel.getUserdata()
-                
                 presentationMode.wrappedValue.dismiss()
-                if viewModel.haveUserData {
-                    
-                    startApp = true
-                }
-                   
-
             }
-        NavigationLink("", destination: ContentView(), isActive: $startApp)
-        
-                   
     }
 }
