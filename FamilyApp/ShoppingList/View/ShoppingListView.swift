@@ -16,6 +16,9 @@ struct ShoppingListView: View {
     @StateObject var shoppingListViewModel = ShoppingListViewModel()
     @EnvironmentObject var viewModel : AppViewModel
     
+    
+    
+    
     var body: some View {
         NavigationView {
             ListView()

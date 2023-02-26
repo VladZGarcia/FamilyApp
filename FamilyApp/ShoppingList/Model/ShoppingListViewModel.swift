@@ -14,8 +14,6 @@ import FirebaseAuth
 
 class ShoppingListViewModel: NSObject, ObservableObject {
     
-    
-    
     let db = Firestore.firestore()
     @State var newItem : String = ""
     @ObservedObject var storeItems = StoreItems()
@@ -27,6 +25,7 @@ class ShoppingListViewModel: NSObject, ObservableObject {
     
     func listenToFirestore(_ groupCode: String) {
         print("ShoppingList--->Loading from firestore")
+        print("in listenToFirestore--->groupCode : \(groupCode)")
         db.collection("FamilyGroup").document(groupCode).collection("items").addSnapshotListener {  snapshot, err in
             guard let snapshot = snapshot else {return}
             
@@ -41,7 +40,7 @@ class ShoppingListViewModel: NSObject, ObservableObject {
                     }
                     switch result {
                     case .success(let item) :
-                        print("Succes reading Shopinglist!")
+                        print("Succes reading Shopinglist! item: \(item)")
                         self.storeItems.items.append(item)
                     case .failure(let error) :
                         print("Error decoding item: \(error)")
@@ -51,8 +50,10 @@ class ShoppingListViewModel: NSObject, ObservableObject {
         }
     }
     
-    func saveToFirestore(_ newItem: String, groupCode: String) {
-        let item = ItemList(itemName: newItem)
+    func saveToFirestore(_ dbNewItem: String, groupCode: String) {
+        print("in saveoFirestore---> newItem: \(dbNewItem)  groupCode : \(groupCode)")
+    
+        let item = ItemList(itemName: dbNewItem)
         do {
             _ = try  db.collection("FamilyGroup").document(groupCode).collection("items").addDocument(from: item)
         } catch {
@@ -60,8 +61,9 @@ class ShoppingListViewModel: NSObject, ObservableObject {
         }
     }
     
-    func addNewItem(newItem: String, groupCode: String) {
-        saveToFirestore(newItem, groupCode: groupCode)
+    func addNewItem(dbNewItem: String, groupCode: String) {
+        print("in addNewItem---> newItem: \(dbNewItem) groupCode : \(groupCode)")
+        saveToFirestore(dbNewItem, groupCode: groupCode)
         
     }
 }
